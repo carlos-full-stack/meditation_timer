@@ -1,0 +1,49 @@
+:root {
+    --primary-color: #69589c;
+    --secondary-color: #e0dedf;
+}
+
+body {
+    background-color: azure;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.timer_container {
+    position: relative;
+    background-color: white;
+    padding: 10rem;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.options {
+    position: absolute;
+    top: 1rem;
+}
+
+.options ul {
+    display: inline-flex;
+    gap: 5rem;
+    list-style: none;
+    padding: 0;
+}
+
+.control {
+    padding: 1.5rem;
+    display: flex;
+    gap: 5rem;
+}
+
+.music {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+}
