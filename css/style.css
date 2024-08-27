@@ -35,6 +35,12 @@ body {
     gap: 3.6rem;
 }
 
+.digits {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .digits span {
     font-size: 2rem;
     font-weight: 600;
@@ -95,6 +101,13 @@ input[type=number] {
     border: solid 3px var(--primary-color);
     aspect-ratio: 1;
     border-radius: 50% 50%;
+}
+
+.timer__level_up,
+.timer__level_down {
+    text-align: center;
+    padding: 1rem;
+    font-size: 2rem;
 }
 
 
