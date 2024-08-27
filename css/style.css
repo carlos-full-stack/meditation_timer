@@ -1,7 +1,18 @@
 :root {
     --primary-color: #69589c;
     --secondary-color: #e0dedf;
+    --primary-ff: 'Poppins', sans-serif;
 }
+
+* {
+    box-sizing: border-box;
+}
+
+
+html {
+    font-family: var(--primary-ff);
+}
+
 
 body {
     background-color: azure;
@@ -15,18 +26,23 @@ body {
 .timer_container {
     position: relative;
     background-color: white;
-    padding: 10rem;
+    padding: 10rem 10rem 4rem;
     border-radius: 15px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
+    gap: 3.6rem;
+}
+
+.digits span {
+    font-size: 2rem;
+    font-weight: 600;
 }
 
 .options {
     position: absolute;
-    top: 1rem;
+    top: 1.8rem;
 }
 
 .options ul {
@@ -39,11 +55,71 @@ body {
 .control {
     padding: 1.5rem;
     display: flex;
-    gap: 5rem;
+    gap: 2rem;
+}
+
+.control span {
+    font-size: 1rem;
+    margin-left: 1rem;
+    font-weight: 800;
 }
 
 .music {
     display: flex;
     align-items: center;
     gap: 1.2rem;
+}
+
+input[type="number"] {
+    border: 0;
+    background: none;
+    text-align: center;
+    max-width: 5rem;
+    font-size: 2rem;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.timer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: solid 3px var(--primary-color);
+    aspect-ratio: 1;
+    border-radius: 50% 50%;
+}
+
+
+.control__stop,
+.control__reload {
+    width: 5rem;
+    height: 5rem;
+    border: solid 2px var(--primary-color);
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50% 50%;
+    color: var(--primary-color);
+    ;
+}
+
+.control__play {
+    width: 10rem;
+    height: 5rem;
+    border: solid 2px var(--primary-color);
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    border-radius: 60px;
+    color: white;
+    background-color: var(--primary-color);
+    ;
 }
