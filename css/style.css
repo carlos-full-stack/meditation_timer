@@ -124,7 +124,7 @@ input[type=number] {
     ;
 }
 
-.control__play {
+.control__play-pause {
     width: 10rem;
     height: 5rem;
     border: solid 2px var(--primary-color);
