@@ -127,12 +127,19 @@ input[type=number] {
 .control__play-pause {
     width: 10rem;
     height: 5rem;
-    border: solid 2px var(--primary-color);
     display: flex !important;
     justify-content: center;
     align-items: center;
     border-radius: 60px;
     color: white;
+}
+
+.control__play {
     background-color: var(--primary-color);
-    ;
+    border: solid 2px var(--primary-color);
+}
+
+.control__pause {
+    background-color: #53467b;
+    border: solid 2px #53467b;
 }
