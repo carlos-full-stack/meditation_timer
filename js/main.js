@@ -4,7 +4,9 @@ let remainingTime;
 
 document.addEventListener('DOMContentLoaded', () => {
     const startPauseButton = document.querySelector('.control__play-pause');
+    const stopButton = document.querySelector('.control__stop');
     startPauseButton.addEventListener('click', startTimer);
+    stopButton.addEventListener('click', stopTimer);
 });
 
 
@@ -33,11 +35,8 @@ function startTimer() {
 
         remainingTime = totalTime;
 
-        console.log(remainingTime);
-
         intervalId = setInterval(() => {
             remainingTime -= 1000;
-            console.log(remainingTime);
 
             if (remainingTime <= 0) {
                 clearInterval(intervalId)
@@ -63,4 +62,18 @@ function updateDisplay(miliseconds) {
 
     document.querySelector('.digits_minutes').value = minutes;
     document.querySelector('.digits_seconds').value = seconds;
+}
+
+
+function stopTimer() {
+    if (intervalId) {
+        clearInterval(intervalId);
+        intervalId = null;
+
+        document.querySelector('.digits_minutes').value = 15;
+        document.querySelector('.digits_seconds').value = 0;
+
+        remainingTime = null;
+
+    }
 }
