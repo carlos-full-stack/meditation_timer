@@ -1,5 +1,6 @@
 let intervalId;
 let remainingTime;
+let pausedTime;
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -26,12 +27,10 @@ function getTime() {
 function startTimer() {
 
     if (intervalId) {
-        pauseTimer(); // pausarlo
+        pauseTimer();
         // cambiar el estilo del boton a play  
     } else {
-        let totalTime = remainingTime || getTime()
-
-        updateDisplay(totalTime);
+        let totalTime = pausedTime || getTime()
 
         remainingTime = totalTime;
 
@@ -41,7 +40,6 @@ function startTimer() {
             if (remainingTime <= 0) {
                 clearInterval(intervalId)
                 intervalId = null;
-                updateDisplay(0);
                 // llamar a funcion que se ejecuta al terminar una sesion
                 remainingTime = null;
                 // cambiar el estilo del boton a play
@@ -65,15 +63,23 @@ function updateDisplay(miliseconds) {
 }
 
 
+function pauseTimer() {
+    if (intervalId) {
+        clearInterval(intervalId);
+        intervalId = null;
+        pausedTime = remainingTime;
+    }
+}
+
+
 function stopTimer() {
     if (intervalId) {
         clearInterval(intervalId);
         intervalId = null;
-
-        document.querySelector('.digits_minutes').value = 15;
-        document.querySelector('.digits_seconds').value = 0;
-
-        remainingTime = null;
-
     }
+    remainingTime = null;
+    pausedTime = null;
+
+    document.querySelector('.digits_minutes').value = 15;
+    document.querySelector('.digits_seconds').value = 0;
 }
