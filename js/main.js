@@ -2,7 +2,6 @@ let intervalId;
 let remainingTime;
 let pausedTime;
 
-
 document.addEventListener('DOMContentLoaded', () => {
     const startPauseButton = document.querySelector('.control__play-pause');
     const stopButton = document.querySelector('.control__stop');
@@ -26,13 +25,25 @@ function getTime() {
 
 function startTimer() {
 
+    const startPauseButton = document.querySelector('.control__play-pause');
+
     if (intervalId) {
         pauseTimer();
-        // cambiar el estilo del boton a play  
+        startPauseButton.classList.remove('control__pause');
+        startPauseButton.querySelector('span').textContent = 'Play';
+        startPauseButton.classList.remove('fa-pause');
+        startPauseButton.classList.add('fa-play');
     } else {
+
         let totalTime = pausedTime || getTime()
 
         remainingTime = totalTime;
+
+        startPauseButton.classList.add('control__pause');
+        startPauseButton.classList.remove('fa-play');
+        startPauseButton.classList.add('fa-pause');
+        startPauseButton.querySelector('span').textContent = 'Pause';
+
 
         intervalId = setInterval(() => {
             remainingTime -= 1000;
@@ -42,7 +53,7 @@ function startTimer() {
                 intervalId = null;
                 // llamar a funcion que se ejecuta al terminar una sesion
                 remainingTime = null;
-                // cambiar el estilo del boton a play
+
 
             } else {
                 updateDisplay(remainingTime);
@@ -82,4 +93,9 @@ function stopTimer() {
 
     document.querySelector('.digits_minutes').value = 15;
     document.querySelector('.digits_seconds').value = 0;
+
+    const startPauseButton = document.querySelector('.control__play-pause');
+
+    startPauseButton.classList.remove('fa-pause');
+    startPauseButton.classList.add('fa-play');
 }
