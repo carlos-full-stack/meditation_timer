@@ -5,8 +5,11 @@ let pausedTime;
 document.addEventListener('DOMContentLoaded', () => {
     const startPauseButton = document.querySelector('.control__play-pause');
     const stopButton = document.querySelector('.control__stop');
+    const bellsLink = document.querySelector('#bells');
     startPauseButton.addEventListener('click', startTimer);
     stopButton.addEventListener('click', stopTimer);
+    bellsLink.addEventListener('click', showBellConfig)
+
 });
 
 
@@ -43,6 +46,8 @@ function startTimer() {
         startPauseButton.classList.remove('fa-play');
         startPauseButton.classList.add('fa-pause');
         startPauseButton.querySelector('span').textContent = 'Pause';
+
+        playBell();
 
 
         intervalId = setInterval(() => {
@@ -98,4 +103,27 @@ function stopTimer() {
 
     startPauseButton.classList.remove('fa-pause');
     startPauseButton.classList.add('fa-play');
+}
+
+
+function playBell() {
+    const bellSound = new Audio('../audio/bells/meditation-bell.mp3');
+    bellSound.play();
+}
+
+function showBellConfig(event) {
+    event.preventDefault();
+    const timerContainer = document.querySelector('.timer_container');
+    const timer = document.querySelector('.timer');
+    const music = document.querySelector('.music');
+    const control = document.querySelector('.control');
+
+    timer.remove();
+    music.remove();
+    control.remove();
+
+    timerContainer.innerHTML += '<span>Set when bell is played:<ul><li>Play at start</li><li>Play at finish</li><li>Play at start and finish</li><li>Don´t play bell</li></ul>'
+
+
+
 }
