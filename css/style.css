@@ -25,6 +25,8 @@ body {
 
 .timer_container {
     position: relative;
+    min-width: 750px;
+    min-height: 720px;
     background-color: white;
     padding: 10rem 10rem 4rem;
     border-radius: 15px;
