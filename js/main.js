@@ -14,9 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     startPauseButton.addEventListener('click', startTimer);
     stopButton.addEventListener('click', stopTimer);
     bellsLink.addEventListener('click', showBellConfig)
-    // timerLink.addEventListener('click', showTimer)
-    timerLink.addEventListener('click', () => console.log("Has hecho click en el enlace de timer!")
-    )
+    timerLink.addEventListener('click', showTimer)
 });
 
 
@@ -125,6 +123,9 @@ function updateBellOptions(option) {
 }
 
 function showBellConfig(event) {
+
+    console.log("carga configuracion campanas");
+
     event.preventDefault();
     const timerContainer = document.querySelector('.timer_container');
     const timer = document.querySelector('.timer');
@@ -135,17 +136,18 @@ function showBellConfig(event) {
     music.remove();
     control.remove();
 
-    timerContainer.innerHTML += `
-    <div class="bell-options">
-    <h2>Set when bell is played:</h2>
-        <ul>
-            <li><input type="radio" name="options" id="start" checked>Play at start (by default)</li>
-            <li><input type="radio" name="options" id="finish">Play at finish</li>
-            <li><input type="radio" name="options" id="both">Play at start and finish</li>
-            <li><input type="radio" name="options" id="silence">Don’t play bell</li>
-        </ul>
-    </div>
-`;
+    timerContainer.insertAdjacentHTML('beforeend', `
+        <div class="bell-options">
+            <h2>Set when bell is played:</h2>
+            <ul>
+                <li><input type="radio" name="options" id="start" checked>Play at start (by default)</li>
+                <li><input type="radio" name="options" id="finish">Play at finish</li>
+                <li><input type="radio" name="options" id="both">Play at start and finish</li>
+                <li><input type="radio" name="options" id="silence">Don’t play bell</li>
+            </ul>
+        </div>
+    `);
+
     const finishRadio = document.querySelector('#finish');
     const bothRadio = document.querySelector('#both');
     const silenceRadio = document.querySelector('#silence');
@@ -160,10 +162,32 @@ function showBellConfig(event) {
 
 function showTimer() {
 
-    console.log("Has hecho click en el enlace del timer");
+    const timerContainer = document.querySelector('.timer_container');
 
     if (showBellConfigIsVisible) {
         let bellOptionsDiv = document.querySelector('.bell-options')
         bellOptionsDiv.remove();
+
+        timerContainer.insertAdjacentHTML('beforeend', `
+        <div class="timer">
+            <div class="timer__level_up">+</div>
+            <div class="digits">
+                <input type="number" class="digits_minutes" min="0" max="60" value="15"><span>:</span><input
+                    type="number" class="digits_seconds" min="0" max="60" value="0">
+            </div>
+            <div class="timer__level_down">-</div>
+        </div>
+        <div class="music">
+            <i class="music__icon fa-brands fa-itunes-note"></i>
+            <h2 class="music__title">Song name</h2>
+        </div>
+        <div class="control">
+            <i class="control__stop fa-solid fa-stop fa-2x"></i>
+            <i class="control__play-pause control__play fa-solid fa-play fa-2x"><span>Play</span></i>
+            <i class="control__reload fa-solid fa-rotate-right fa-2x"></i>
+        </div>
+        `);
+
+
     }
 }
