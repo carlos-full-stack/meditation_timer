@@ -145,3 +145,14 @@ input[type=number] {
     background-color: #53467b;
     border: solid 2px #53467b;
 }
+
+.bell-options li {
+    list-style: none;
+    font-size: 1.2rem;
+    margin-bottom: .8rem;
+}
+
+.bell-options ul {
+    padding: 0;
+    ;
+}
