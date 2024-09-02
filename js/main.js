@@ -52,8 +52,10 @@ function startTimer() {
         startPauseButton.classList.add('fa-pause');
         startPauseButton.querySelector('span').textContent = 'Pause';
 
-        playBell();
+        if (!silence && !bellFinish) {
 
+            playBell();
+        }
 
         intervalId = setInterval(() => {
             remainingTime -= 1000;
@@ -61,9 +63,14 @@ function startTimer() {
             if (remainingTime <= 0) {
                 clearInterval(intervalId)
                 intervalId = null;
-                // llamar a funcion que se ejecuta al terminar una sesion
                 remainingTime = null;
 
+                updateDisplay(remainingTime);
+
+                if (bellFinish || bellStartFinish) {
+
+                    playBell();
+                }
 
             } else {
                 updateDisplay(remainingTime);
@@ -120,11 +127,10 @@ function updateBellOptions(option) {
     bellFinish = (option === 'finish');
     bellStartFinish = (option === 'both');
     silence = (option === 'silence');
+
 }
 
 function showBellConfig(event) {
-
-    console.log("carga configuracion campanas");
 
     event.preventDefault();
     const timerContainer = document.querySelector('.timer_container');
@@ -132,16 +138,28 @@ function showBellConfig(event) {
     const music = document.querySelector('.music');
     const control = document.querySelector('.control');
 
-    timer.remove();
-    music.remove();
-    control.remove();
+    if (timer) {
+        timer.remove();
+    } else {
+        return;
+    }
+    if (music) {
+        music.remove();
+    } else {
+        return;
+    }
+    if (control) {
+        control.remove();
+    } else {
+        return;
+    }
 
     timerContainer.insertAdjacentHTML('beforeend', `
         <div class="bell-options">
             <h2>Set when bell is played:</h2>
             <ul>
-                <li><input type="radio" name="options" id="start" checked>Play at start (by default)</li>
-                <li><input type="radio" name="options" id="finish">Play at finish</li>
+                <li><input type="radio" name="options" id="start" checked>Play only at start (by default)</li>
+                <li><input type="radio" name="options" id="finish">Play only at finish only</li>
                 <li><input type="radio" name="options" id="both">Play at start and finish</li>
                 <li><input type="radio" name="options" id="silence">Don’t play bell</li>
             </ul>
@@ -190,4 +208,9 @@ function showTimer() {
 
 
     }
+
+    const startPauseButton = document.querySelector('.control__play-pause');
+    const stopButton = document.querySelector('.control__stop');
+    startPauseButton.addEventListener('click', startTimer);
+    stopButton.addEventListener('click', stopTimer);
 }
