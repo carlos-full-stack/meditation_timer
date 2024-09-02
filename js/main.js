@@ -195,7 +195,7 @@ function showTimer() {
             <div class="timer__increase-time">+</div>
             <div class="digits">
                 <input type="number" class="digits_minutes" min="0" max="60" value="15"><span>:</span><input
-                    type="number" class="digits_seconds" min="0" max="60" value="0">
+                    type="number" class="digits_seconds" min="0" max="60" value="00">
             </div>
             <div class="timer__decrease-time">-</div>
         </div>
@@ -215,6 +215,10 @@ function showTimer() {
 
     const startPauseButton = document.querySelector('.control__play-pause');
     const stopButton = document.querySelector('.control__stop');
+    const increaseTimeLink = document.querySelector('.timer__increase-time');
+    const decreaseTimeLink = document.querySelector('.timer__decrease-time');
+    increaseTimeLink.addEventListener('click', increaseTime)
+    decreaseTimeLink.addEventListener('click', decreaseTime)
     startPauseButton.addEventListener('click', startTimer);
     stopButton.addEventListener('click', stopTimer);
 }
