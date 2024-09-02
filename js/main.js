@@ -109,7 +109,7 @@ function stopTimer() {
     pausedTime = null;
 
     document.querySelector('.digits_minutes').value = 15;
-    document.querySelector('.digits_seconds').value = 0;
+    document.querySelector('.digits_seconds').value = '00';
 
     const startPauseButton = document.querySelector('.control__play-pause');
 
