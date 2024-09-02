@@ -105,8 +105,8 @@ input[type=number] {
     border-radius: 50% 50%;
 }
 
-.timer__level_up,
-.timer__level_down {
+.timer__increase-time,
+.timer__decrease-time {
     text-align: center;
     padding: 1rem;
     font-size: 2rem;

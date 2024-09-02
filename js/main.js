@@ -11,10 +11,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const stopButton = document.querySelector('.control__stop');
     const bellsLink = document.querySelector('#bells');
     const timerLink = document.querySelector('#timer');
+    const increaseTimeLink = document.querySelector('.timer__increase-time');
+    const decreaseTimeLink = document.querySelector('.timer__decrease-time');
     startPauseButton.addEventListener('click', startTimer);
     stopButton.addEventListener('click', stopTimer);
     bellsLink.addEventListener('click', showBellConfig)
     timerLink.addEventListener('click', showTimer)
+    increaseTimeLink.addEventListener('click', increaseTime)
+    decreaseTimeLink.addEventListener('click', decreaseTime)
 });
 
 
@@ -188,12 +192,12 @@ function showTimer() {
 
         timerContainer.insertAdjacentHTML('beforeend', `
         <div class="timer">
-            <div class="timer__level_up">+</div>
+            <div class="timer__increase-time">+</div>
             <div class="digits">
                 <input type="number" class="digits_minutes" min="0" max="60" value="15"><span>:</span><input
                     type="number" class="digits_seconds" min="0" max="60" value="0">
             </div>
-            <div class="timer__level_down">-</div>
+            <div class="timer__decrease-time">-</div>
         </div>
         <div class="music">
             <i class="music__icon fa-brands fa-itunes-note"></i>
@@ -213,4 +217,11 @@ function showTimer() {
     const stopButton = document.querySelector('.control__stop');
     startPauseButton.addEventListener('click', startTimer);
     stopButton.addEventListener('click', stopTimer);
+}
+
+function increaseTime() {
+    document.querySelector('.digits_minutes').value++;
+}
+function decreaseTime() {
+    document.querySelector('.digits_minutes').value--;
 }
