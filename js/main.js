@@ -1,15 +1,22 @@
 let intervalId;
 let remainingTime;
 let pausedTime;
+let bellFinish = false;
+let bellStartFinish = false;
+let silence = false;
+let showBellConfigIsVisible = false;
 
 document.addEventListener('DOMContentLoaded', () => {
     const startPauseButton = document.querySelector('.control__play-pause');
     const stopButton = document.querySelector('.control__stop');
     const bellsLink = document.querySelector('#bells');
+    const timerLink = document.querySelector('#timer');
     startPauseButton.addEventListener('click', startTimer);
     stopButton.addEventListener('click', stopTimer);
     bellsLink.addEventListener('click', showBellConfig)
-
+    // timerLink.addEventListener('click', showTimer)
+    timerLink.addEventListener('click', () => console.log("Has hecho click en el enlace de timer!")
+    )
 });
 
 
@@ -111,6 +118,12 @@ function playBell() {
     bellSound.play();
 }
 
+function updateBellOptions(option) {
+    bellFinish = (option === 'finish');
+    bellStartFinish = (option === 'both');
+    silence = (option === 'silence');
+}
+
 function showBellConfig(event) {
     event.preventDefault();
     const timerContainer = document.querySelector('.timer_container');
@@ -122,8 +135,35 @@ function showBellConfig(event) {
     music.remove();
     control.remove();
 
-    timerContainer.innerHTML += '<span>Set when bell is played:<ul><li>Play at start</li><li>Play at finish</li><li>Play at start and finish</li><li>Don´t play bell</li></ul>'
+    timerContainer.innerHTML += `
+    <div class="bell-options">
+    <h2>Set when bell is played:</h2>
+        <ul>
+            <li><input type="radio" name="options" id="start" checked>Play at start (by default)</li>
+            <li><input type="radio" name="options" id="finish">Play at finish</li>
+            <li><input type="radio" name="options" id="both">Play at start and finish</li>
+            <li><input type="radio" name="options" id="silence">Don’t play bell</li>
+        </ul>
+    </div>
+`;
+    const finishRadio = document.querySelector('#finish');
+    const bothRadio = document.querySelector('#both');
+    const silenceRadio = document.querySelector('#silence');
 
+    finishRadio.addEventListener('change', () => updateBellOptions('finish'));
+    bothRadio.addEventListener('change', () => updateBellOptions('both'));
+    silenceRadio.addEventListener('change', () => updateBellOptions('silence'))
 
+    showBellConfigIsVisible = true;
 
+}
+
+function showTimer() {
+
+    console.log("Has hecho click en el enlace del timer");
+
+    if (showBellConfigIsVisible) {
+        let bellOptionsDiv = document.querySelector('.bell-options')
+        bellOptionsDiv.remove();
+    }
 }
