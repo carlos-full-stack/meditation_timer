@@ -11,12 +11,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const stopButton = document.querySelector('.control__stop');
     const bellsLink = document.querySelector('#bells');
     const timerLink = document.querySelector('#timer');
+    const musicPlaylistLink = document.querySelector('#music-playlist');
     const increaseTimeLink = document.querySelector('.timer__increase-time');
     const decreaseTimeLink = document.querySelector('.timer__decrease-time');
     startPauseButton.addEventListener('click', startTimer);
     stopButton.addEventListener('click', stopTimer);
     bellsLink.addEventListener('click', showBellConfig)
     timerLink.addEventListener('click', showTimer)
+    musicPlaylistLink.addEventListener('click', showMusicPlaylist)
     increaseTimeLink.addEventListener('click', increaseTime)
     decreaseTimeLink.addEventListener('click', decreaseTime)
 });
@@ -138,27 +140,25 @@ function showBellConfig(event) {
 
     if (currentPage !== 'bellConfig') {
 
-        event.preventDefault();
-        const timerContainer = document.querySelector('.timer_container');
-        const timer = document.querySelector('.timer');
-        const music = document.querySelector('.music');
-        const control = document.querySelector('.control');
+        if (currentPage === 'timer') {
 
-        if (timer) {
-            timer.remove();
-        } else {
-            return;
+            const timer = document.querySelector('.timer');
+            const music = document.querySelector('.music');
+            const control = document.querySelector('.control');
+
+            if (timer) { timer.remove() };
+            if (music) { music.remove() };
+            if (control) { control.remove() };
+
         }
-        if (music) {
-            music.remove();
-        } else {
-            return;
+
+        if (currentPage === 'musicPlaylist') {
+
+            let musicplaylistDiv = document.querySelector('.music-playlist');
+            if (musicplaylistDiv) musicplaylistDiv.remove();
         }
-        if (control) {
-            control.remove();
-        } else {
-            return;
-        }
+
+        const timerContainer = document.querySelector('.timer_container');
 
         timerContainer.insertAdjacentHTML('beforeend', `
         <div class="bell-options">
@@ -189,10 +189,20 @@ function showTimer() {
 
     if (currentPage !== 'timer') {
 
-        const timerContainer = document.querySelector('.timer_container');
+        if (currentPage === 'bellConfig') {
 
-        let bellOptionsDiv = document.querySelector('.bell-options')
-        bellOptionsDiv.remove();
+            let bellOptionsDiv = document.querySelector('.bell-options');
+            if (bellOptionsDiv) bellOptionsDiv.remove();
+        }
+
+        if (currentPage === 'musicPlaylist') {
+
+            let musicplaylistDiv = document.querySelector('.music-playlist');
+            if (musicplaylistDiv) musicplaylistDiv.remove();
+        }
+
+
+        const timerContainer = document.querySelector('.timer_container');
 
         timerContainer.insertAdjacentHTML('beforeend', `
         <div class="timer">
@@ -223,7 +233,48 @@ function showTimer() {
         startPauseButton.addEventListener('click', startTimer);
         stopButton.addEventListener('click', stopTimer);
 
+
         currentPage = 'timer';
+
+    }
+
+}
+function showMusicPlaylist(event) {
+
+    if (currentPage !== 'musicPlaylist') {
+
+        if (currentPage === 'bellConfig') {
+
+            let bellOptionsDiv = document.querySelector('.bell-options')
+            if (bellOptionsDiv) bellOptionsDiv.remove();
+        }
+
+        if (currentPage === 'timer') {
+
+            const timer = document.querySelector('.timer');
+            const music = document.querySelector('.music');
+            const control = document.querySelector('.control');
+
+            if (timer) { timer.remove() };
+            if (music) { music.remove() };
+            if (control) { control.remove() };
+
+        }
+
+
+        const timerContainer = document.querySelector('.timer_container');
+
+        timerContainer.insertAdjacentHTML('beforeend', `
+            <div class="music-playlist">
+                <h2>Set background music:</h2>
+            </div>
+        `);
+
+        // añadir playlist 
+        // añadir event listeners 
+
+
+        currentPage = 'musicPlaylist';
 
     }
 
