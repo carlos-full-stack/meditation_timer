@@ -95,8 +95,8 @@ function updateDisplay(miliseconds) {
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = totalSeconds % 60;
 
-    document.querySelector('.digits_minutes').value = minutes;
-    document.querySelector('.digits_seconds').value = seconds;
+    if (minutes) document.querySelector('.digits_minutes').value = minutes;
+    if (seconds) document.querySelector('.digits_seconds').value = seconds;
 }
 
 
@@ -122,8 +122,7 @@ function stopTimer() {
 
     const startPauseButton = document.querySelector('.control__play-pause');
 
-    startPauseButton.classList.remove('fa-pause');
-    startPauseButton.classList.add('fa-play');
+    if (startPauseButton) startPauseButton.classList.remove('fa-pause'); startPauseButton.classList.add('fa-play');
 }
 
 
@@ -149,9 +148,9 @@ function showBellConfig(event) {
             const music = document.querySelector('.music');
             const control = document.querySelector('.control');
 
-            if (timer) { timer.remove() };
-            if (music) { music.remove() };
-            if (control) { control.remove() };
+            if (timer) timer.remove();
+            if (music) music.remove();
+            if (control) control.remove();
 
         }
 
@@ -179,9 +178,9 @@ function showBellConfig(event) {
         const bothRadio = document.querySelector('#both');
         const silenceRadio = document.querySelector('#silence');
 
-        finishRadio.addEventListener('change', () => updateBellOptions('finish'));
-        bothRadio.addEventListener('change', () => updateBellOptions('both'));
-        silenceRadio.addEventListener('change', () => updateBellOptions('silence'))
+        if (finishRadio) finishRadio.addEventListener('change', () => updateBellOptions('finish'));
+        if (bothRadio) bothRadio.addEventListener('change', () => updateBellOptions('both'));
+        if (silenceRadio) silenceRadio.addEventListener('change', () => updateBellOptions('silence'))
 
         currentPage = 'bellConfig';
 
@@ -300,16 +299,16 @@ function showMusicPlaylist(event) {
         const track3 = document.querySelector('#track3');
         const track4 = document.querySelector('#track4');
 
-        track1.addEventListener('click', () => {
+        if (track1) track1.addEventListener('click', () => {
             backgroundMusic = 'track1';
         });
-        track2.addEventListener('click', () => {
+        if (track2) track2.addEventListener('click', () => {
             backgroundMusic = 'track2';
         });
-        track3.addEventListener('click', () => {
+        if (track3) track3.addEventListener('click', () => {
             backgroundMusic = 'track3';
         });
-        track4.addEventListener('click', () => {
+        if (track3) track4.addEventListener('click', () => {
             backgroundMusic = 'track4';
         });
 
@@ -325,7 +324,7 @@ function playBackgroundMusic(track) {
     switch (track) {
         case 'track1':
             audio = new Audio('../audio/music/relaxing-peace.mp3');
-            audio.play();
+            if (audio) audio.play();
             break;
 
         default:
