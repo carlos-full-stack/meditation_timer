@@ -4,7 +4,7 @@ let pausedTime;
 let bellFinish = false;
 let bellStartFinish = false;
 let silence = false;
-let showBellConfigIsVisible = false;
+let currentPage = 'timer';
 
 document.addEventListener('DOMContentLoaded', () => {
     const startPauseButton = document.querySelector('.control__play-pause');
@@ -136,29 +136,31 @@ function updateBellOptions(option) {
 
 function showBellConfig(event) {
 
-    event.preventDefault();
-    const timerContainer = document.querySelector('.timer_container');
-    const timer = document.querySelector('.timer');
-    const music = document.querySelector('.music');
-    const control = document.querySelector('.control');
+    if (currentPage !== 'bellConfig') {
 
-    if (timer) {
-        timer.remove();
-    } else {
-        return;
-    }
-    if (music) {
-        music.remove();
-    } else {
-        return;
-    }
-    if (control) {
-        control.remove();
-    } else {
-        return;
-    }
+        event.preventDefault();
+        const timerContainer = document.querySelector('.timer_container');
+        const timer = document.querySelector('.timer');
+        const music = document.querySelector('.music');
+        const control = document.querySelector('.control');
 
-    timerContainer.insertAdjacentHTML('beforeend', `
+        if (timer) {
+            timer.remove();
+        } else {
+            return;
+        }
+        if (music) {
+            music.remove();
+        } else {
+            return;
+        }
+        if (control) {
+            control.remove();
+        } else {
+            return;
+        }
+
+        timerContainer.insertAdjacentHTML('beforeend', `
         <div class="bell-options">
             <h2>Set when bell is played:</h2>
             <ul>
@@ -170,23 +172,25 @@ function showBellConfig(event) {
         </div>
     `);
 
-    const finishRadio = document.querySelector('#finish');
-    const bothRadio = document.querySelector('#both');
-    const silenceRadio = document.querySelector('#silence');
+        const finishRadio = document.querySelector('#finish');
+        const bothRadio = document.querySelector('#both');
+        const silenceRadio = document.querySelector('#silence');
 
-    finishRadio.addEventListener('change', () => updateBellOptions('finish'));
-    bothRadio.addEventListener('change', () => updateBellOptions('both'));
-    silenceRadio.addEventListener('change', () => updateBellOptions('silence'))
+        finishRadio.addEventListener('change', () => updateBellOptions('finish'));
+        bothRadio.addEventListener('change', () => updateBellOptions('both'));
+        silenceRadio.addEventListener('change', () => updateBellOptions('silence'))
 
-    showBellConfigIsVisible = true;
+        currentPage = 'bellConfig';
 
+    }
 }
 
 function showTimer() {
 
-    const timerContainer = document.querySelector('.timer_container');
+    if (currentPage !== 'timer') {
 
-    if (showBellConfigIsVisible) {
+        const timerContainer = document.querySelector('.timer_container');
+
         let bellOptionsDiv = document.querySelector('.bell-options')
         bellOptionsDiv.remove();
 
@@ -210,17 +214,19 @@ function showTimer() {
         </div>
         `);
 
+        const startPauseButton = document.querySelector('.control__play-pause');
+        const stopButton = document.querySelector('.control__stop');
+        const increaseTimeLink = document.querySelector('.timer__increase-time');
+        const decreaseTimeLink = document.querySelector('.timer__decrease-time');
+        increaseTimeLink.addEventListener('click', increaseTime);
+        decreaseTimeLink.addEventListener('click', decreaseTime);
+        startPauseButton.addEventListener('click', startTimer);
+        stopButton.addEventListener('click', stopTimer);
+
+        currentPage = 'timer';
 
     }
 
-    const startPauseButton = document.querySelector('.control__play-pause');
-    const stopButton = document.querySelector('.control__stop');
-    const increaseTimeLink = document.querySelector('.timer__increase-time');
-    const decreaseTimeLink = document.querySelector('.timer__decrease-time');
-    increaseTimeLink.addEventListener('click', increaseTime)
-    decreaseTimeLink.addEventListener('click', decreaseTime)
-    startPauseButton.addEventListener('click', startTimer);
-    stopButton.addEventListener('click', stopTimer);
 }
 
 function increaseTime() {
