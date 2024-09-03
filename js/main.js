@@ -5,6 +5,7 @@ let bellFinish = false;
 let bellStartFinish = false;
 let silence = false;
 let currentPage = 'timer';
+let backgroundMusic;
 
 document.addEventListener('DOMContentLoaded', () => {
     const startPauseButton = document.querySelector('.control__play-pause');
@@ -62,6 +63,8 @@ function startTimer() {
 
             playBell();
         }
+
+        if (backgroundMusic) playBackgroundMusic(backgroundMusic);
 
         intervalId = setInterval(() => {
             remainingTime -= 1000;
@@ -255,9 +258,9 @@ function showMusicPlaylist(event) {
             const music = document.querySelector('.music');
             const control = document.querySelector('.control');
 
-            if (timer) { timer.remove() };
-            if (music) { music.remove() };
-            if (control) { control.remove() };
+            if (timer) timer.remove();
+            if (music) music.remove();
+            if (control) control.remove();
 
         }
 
@@ -265,19 +268,69 @@ function showMusicPlaylist(event) {
         const timerContainer = document.querySelector('.timer_container');
 
         timerContainer.insertAdjacentHTML('beforeend', `
-            <div class="music-playlist">
-                <h2>Set background music:</h2>
+                    <div class="music-playlist">
+                        <h2>Set background music:</h2>
+                        <div class="playlist-container">
+            <div id="track1">
+                <img src="./images/audio-covers/relaxing-peace.jpg" alt="">
+                <h3>Relaxing peace</h3>
+                <span>Soothing melodies.</span>
+            </div>
+            <div id="track2">
+                <img src="./images/audio-covers/relaxing-peace.jpg" alt="">
+                <h3>Relaxing peace</h3>
+                <span>Soothing melodies.</span>
+            </div>
+            <div id="track3">
+                <img src="./images/audio-covers/relaxing-peace.jpg" alt="">
+                <h3>Relaxing peace</h3>
+                <span>Soothing melodies.</span>
+            </div>
+            <div id="track4">
+                <img src="./images/audio-covers/relaxing-peace.jpg" alt="">
+                <h3>Relaxing peace</h3>
+                <span>Soothing melodies.</span>
+            </div>
+        </div>
             </div>
         `);
 
-        // añadir playlist 
-        // añadir event listeners 
+        const track1 = document.querySelector('#track1');
+        const track2 = document.querySelector('#track2');
+        const track3 = document.querySelector('#track3');
+        const track4 = document.querySelector('#track4');
 
+        track1.addEventListener('click', () => {
+            backgroundMusic = 'track1';
+        });
+        track2.addEventListener('click', () => {
+            backgroundMusic = 'track2';
+        });
+        track3.addEventListener('click', () => {
+            backgroundMusic = 'track3';
+        });
+        track4.addEventListener('click', () => {
+            backgroundMusic = 'track4';
+        });
 
-        currentPage = 'musicPlaylist';
 
     }
 
+    currentPage = 'musicPlaylist';
+
+}
+
+
+function playBackgroundMusic(track) {
+    switch (track) {
+        case 'track1':
+            audio = new Audio('../audio/music/relaxing-peace.mp3');
+            audio.play();
+            break;
+
+        default:
+            break;
+    }
 }
 
 function increaseTime() {
