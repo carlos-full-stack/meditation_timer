@@ -24,7 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
     decreaseTimeLink.addEventListener('click', decreaseTime)
 });
 
-
 function getTime() {
 
     const minutesInput = parseInt(document.querySelector('.digits_minutes').value);
@@ -36,14 +35,15 @@ function getTime() {
     return totalTime;
 
 }
-
-
 function startTimer() {
 
     const startPauseButton = document.querySelector('.control__play-pause');
 
     if (intervalId) {
+
         pauseTimer();
+        if (backgroundMusic) audio.pause();
+
         startPauseButton.classList.remove('control__pause');
         startPauseButton.querySelector('span').textContent = 'Play';
         startPauseButton.classList.remove('fa-pause');
@@ -59,12 +59,17 @@ function startTimer() {
         startPauseButton.classList.add('fa-pause');
         startPauseButton.querySelector('span').textContent = 'Pause';
 
-        if (!silence && !bellFinish) {
+        if (!pausedTime) {
 
-            playBell();
+            if (!silence && !bellFinish) { // Play the bell if is not silence or played at the end
+
+                playBell();
+            }
+
+            if (backgroundMusic) setTimeout(() => playBackgroundMusic(backgroundMusic), 6000); // if there's a bg music, play it after the bell (bell last 6')
         }
 
-        if (backgroundMusic) playBackgroundMusic(backgroundMusic);
+
 
         intervalId = setInterval(() => {
             remainingTime -= 1000;
@@ -88,7 +93,6 @@ function startTimer() {
         }, 1000);
     }
 }
-
 function updateDisplay(miliseconds) {
 
     const totalSeconds = Math.floor(miliseconds / 1000);
@@ -98,17 +102,14 @@ function updateDisplay(miliseconds) {
     if (minutes) document.querySelector('.digits_minutes').value = minutes;
     if (seconds) document.querySelector('.digits_seconds').value = seconds;
 }
-
-
 function pauseTimer() {
     if (intervalId) {
         clearInterval(intervalId);
         intervalId = null;
         pausedTime = remainingTime;
+
     }
 }
-
-
 function stopTimer() {
     if (intervalId) {
         clearInterval(intervalId);
@@ -123,21 +124,19 @@ function stopTimer() {
     const startPauseButton = document.querySelector('.control__play-pause');
 
     if (startPauseButton) startPauseButton.classList.remove('fa-pause'); startPauseButton.classList.add('fa-play');
+
+    if (backgroundMusic) audio.currentTime = 0;
 }
-
-
 function playBell() {
     const bellSound = new Audio('../audio/bells/meditation-bell.mp3');
     bellSound.play();
 }
-
 function updateBellOptions(option) {
     bellFinish = (option === 'finish');
     bellStartFinish = (option === 'both');
     silence = (option === 'silence');
 
 }
-
 function showBellConfig(event) {
 
     if (currentPage !== 'bellConfig') {
@@ -186,7 +185,6 @@ function showBellConfig(event) {
 
     }
 }
-
 function showTimer() {
 
     if (currentPage !== 'timer') {
@@ -318,8 +316,6 @@ function showMusicPlaylist(event) {
     currentPage = 'musicPlaylist';
 
 }
-
-
 function playBackgroundMusic(track) {
     switch (track) {
         case 'track1':
