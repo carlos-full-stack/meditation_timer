@@ -327,7 +327,19 @@ function showMusicPlaylist(event) {
 function playBackgroundMusic(track) {
     switch (track) {
         case 'track1':
-            audio = new Audio('../audio/music/relaxing-peace.mp3');
+            audio = new Audio('../audio/music/That%20Zen%20Moment.mp3');
+            if (audio) audio.play();
+            break;
+        case 'track2':
+            audio = new Audio('../audio/music/River%20Flute.mp3');
+            if (audio) audio.play();
+            break;
+        case 'track3':
+            audio = new Audio('../audio/music/Ever%20Mindful.mp3');
+            if (audio) audio.play();
+            break;
+        case 'track4':
+            audio = new Audio('../audio/music/Ethereal%20Relaxation.mp3');
             if (audio) audio.play();
             break;
 
