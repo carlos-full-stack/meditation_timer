@@ -26,13 +26,13 @@ body {
 .timer_container {
     position: relative;
     width: 750px;
-    min-height: 720px;
+    min-height: 600px;
+    padding: 2rem;
     background-color: white;
-    padding: 10rem 10rem 4rem;
     border-radius: 15px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     gap: 3.6rem;
 }
@@ -48,10 +48,10 @@ body {
     font-weight: 600;
 }
 
-.options {
+/* .options {
     position: absolute;
     top: 1.8rem;
-}
+} */
 
 .options ul {
     display: inline-flex;
@@ -149,7 +149,11 @@ input[type=number] {
 .bell-options li {
     list-style: none;
     font-size: 1.2rem;
-    margin-bottom: .8rem;
+    margin-bottom: 3rem;
+}
+
+input[type='radio'] {
+    margin-right: 1rem;
 }
 
 .bell-options ul {
@@ -160,13 +164,14 @@ input[type=number] {
     display: grid;
     width: 100%;
     grid-template-columns: 1fr 1fr;
-    gap: 3rem;
+    gap: 1.5rem 3rem;
 }
 
 .playlist-container img {
-    width: 100%;
+    width: 185px;
+    height: 185px;
+    object-fit: cover;
     border-radius: 15px;
-    ;
 }
 
 .playlist-container h3 {

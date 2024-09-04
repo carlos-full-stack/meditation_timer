@@ -168,7 +168,6 @@ function showBellConfig(event) {
 
         timerContainer.insertAdjacentHTML('beforeend', `
         <div class="bell-options">
-            <h2>Set when bell is played:</h2>
             <ul>
                 <li><input type="radio" name="options" id="start" checked>Play only at start (by default)</li>
                 <li><input type="radio" name="options" id="finish">Play only at finish only</li>
@@ -273,30 +272,24 @@ function showMusicPlaylist(event) {
 
         timerContainer.insertAdjacentHTML('beforeend', `
                     <div class="music-playlist">
-                        <h2>Set background music:</h2>
                         <div class="playlist-container">
             <div id="track1">
-                <img src="./images/audio-covers/relaxing-peace.jpg" alt="">
-                <h3>Relaxing peace</h3>
-                <span>Soothing melodies.</span>
+                <img src="./images/audio-covers/zen.jpg" alt="">
+                <h3>That Zen Moment</h3>
             </div>
             <div id="track2">
-                <img src="./images/audio-covers/relaxing-peace.jpg" alt="">
-                <h3>Relaxing peace</h3>
-                <span>Soothing melodies.</span>
+                <img src="./images/audio-covers/river.jpg" alt="">
+                <h3>River Flute</h3>
             </div>
             <div id="track3">
-                <img src="./images/audio-covers/relaxing-peace.jpg" alt="">
-                <h3>Relaxing peace</h3>
-                <span>Soothing melodies.</span>
+                <img src="./images/audio-covers/mindful.jpg" alt="">
+                <h3>Ever Mindful</h3>
             </div>
             <div id="track4">
-                <img src="./images/audio-covers/relaxing-peace.jpg" alt="">
-                <h3>Relaxing peace</h3>
-                <span>Soothing melodies.</span>
+                <img src="./images/audio-covers/relaxation.jpg" alt="">
+                <h3>Ethereal Relaxation</h3>
             </div>
         </div>
-            </div>
         `);
 
         const track1 = document.querySelector('#track1');
@@ -306,16 +299,17 @@ function showMusicPlaylist(event) {
 
         if (track1) track1.addEventListener('click', () => {
             backgroundMusic = 'track1';
-            songtitle = 'Relaxing Peace';
+            songtitle = 'That Zen Moment';
         });
         if (track2) track2.addEventListener('click', () => {
             backgroundMusic = 'track2';
+            songtitle = 'River Flute';
         });
         if (track3) track3.addEventListener('click', () => {
-            backgroundMusic = 'track3';
+            backgroundMusic = 'Ever Mindful';
         });
         if (track3) track4.addEventListener('click', () => {
-            backgroundMusic = 'track4';
+            backgroundMusic = 'Ethereal Relaxation';
         });
 
 
