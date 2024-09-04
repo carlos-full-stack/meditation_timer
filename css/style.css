@@ -72,7 +72,7 @@ body {
     font-weight: 800;
 }
 
-.music {
+.song {
     display: flex;
     align-items: center;
     gap: 1.2rem;
