@@ -6,6 +6,8 @@ let bellStartFinish = false;
 let silence = false;
 let currentPage = 'timer';
 let backgroundMusic;
+let audio;
+let songtitle;
 
 document.addEventListener('DOMContentLoaded', () => {
     const startPauseButton = document.querySelector('.control__play-pause');
@@ -69,8 +71,6 @@ function startTimer() {
             if (backgroundMusic) setTimeout(() => playBackgroundMusic(backgroundMusic), 6000); // if there's a bg music, play it after the bell (bell last 6')
         }
 
-
-
         intervalId = setInterval(() => {
             remainingTime -= 1000;
 
@@ -125,7 +125,12 @@ function stopTimer() {
 
     if (startPauseButton) startPauseButton.classList.remove('fa-pause'); startPauseButton.classList.add('fa-play');
 
-    if (backgroundMusic) audio.currentTime = 0;
+    if (backgroundMusic) {
+        audio.pause();
+        audio.currentTime = 0;
+        audio = null;
+        backgroundMusic = null;
+    }
 }
 function playBell() {
     const bellSound = new Audio('../audio/bells/meditation-bell.mp3');
@@ -144,11 +149,11 @@ function showBellConfig(event) {
         if (currentPage === 'timer') {
 
             const timer = document.querySelector('.timer');
-            const music = document.querySelector('.music');
+            const song = document.querySelector('.song');
             const control = document.querySelector('.control');
 
             if (timer) timer.remove();
-            if (music) music.remove();
+            if (song) song.remove();
             if (control) control.remove();
 
         }
@@ -213,9 +218,9 @@ function showTimer() {
             </div>
             <div class="timer__decrease-time">-</div>
         </div>
-        <div class="music">
-            <i class="music__icon fa-brands fa-itunes-note"></i>
-            <h2 class="music__title">Song name</h2>
+        <div class="song">
+            <i class="song__icon fa-brands fa-itunes-note"></i>
+            <h2 class="song__title">Song name</h2>
         </div>
         <div class="control">
             <i class="control__stop fa-solid fa-stop fa-2x"></i>
@@ -232,6 +237,8 @@ function showTimer() {
         decreaseTimeLink.addEventListener('click', decreaseTime);
         startPauseButton.addEventListener('click', startTimer);
         stopButton.addEventListener('click', stopTimer);
+
+        if (songtitle) showSongTitle(songtitle);
 
 
         currentPage = 'timer';
@@ -252,11 +259,11 @@ function showMusicPlaylist(event) {
         if (currentPage === 'timer') {
 
             const timer = document.querySelector('.timer');
-            const music = document.querySelector('.music');
+            const song = document.querySelector('.song');
             const control = document.querySelector('.control');
 
             if (timer) timer.remove();
-            if (music) music.remove();
+            if (song) song.remove();
             if (control) control.remove();
 
         }
@@ -299,6 +306,7 @@ function showMusicPlaylist(event) {
 
         if (track1) track1.addEventListener('click', () => {
             backgroundMusic = 'track1';
+            songtitle = 'Relaxing Peace';
         });
         if (track2) track2.addEventListener('click', () => {
             backgroundMusic = 'track2';
@@ -327,7 +335,16 @@ function playBackgroundMusic(track) {
             break;
     }
 }
+function showSongTitle(songtitle) {
 
+    const songTitleH2 = document.querySelector('.song__title');
+    if (songTitleH2) songTitleH2.textContent = songtitle;
+
+    console.log(songTitleH2);
+    console.log(songtitle);
+
+
+}
 function increaseTime() {
     document.querySelector('.digits_minutes').value++;
 }
