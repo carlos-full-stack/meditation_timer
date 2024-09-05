@@ -8,6 +8,7 @@ let currentPage = 'timer';
 let backgroundMusic;
 let audio;
 let songtitle;
+let bellSound;
 
 document.addEventListener('DOMContentLoaded', () => {
     const startPauseButton = document.querySelector('.control__play-pause');
@@ -44,6 +45,7 @@ function startTimer() {
     if (intervalId) {
 
         pauseTimer();
+        stopBell();
         if (backgroundMusic) audio.pause();
 
         startPauseButton.classList.remove('control__pause');
@@ -111,6 +113,10 @@ function pauseTimer() {
     }
 }
 function stopTimer() {
+
+    stopBell();
+
+
     if (intervalId) {
         clearInterval(intervalId);
         intervalId = null;
@@ -133,8 +139,16 @@ function stopTimer() {
     }
 }
 function playBell() {
-    const bellSound = new Audio('../audio/bells/meditation-bell.mp3');
+
+    bellSound = new Audio('../audio/bells/meditation-bell.mp3');
     bellSound.play();
+}
+
+function stopBell() {
+    if (bellSound && !bellSound.ended) {
+        bellSound.pause();
+        bellSound.currentTime = 0;
+    }
 }
 function updateBellOptions(option) {
     bellFinish = (option === 'finish');
@@ -383,18 +397,15 @@ function playBackgroundMusic(track) {
         case 'track2':
             audio = new Audio('../audio/music/River%20Flute.mp3');
             if (audio) audio.play();
-            console.log('play track 2');
 
             break;
         case 'track3':
             audio = new Audio('../audio/music/Ever%20Mindful.mp3');
             if (audio) audio.play();
-            console.log('play track 3');
             break;
         case 'track4':
             audio = new Audio('../audio/music/Ethereal%20Relaxation.mp3');
             if (audio) audio.play();
-            console.log('play track 4');
             break;
 
         default:
