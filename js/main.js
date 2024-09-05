@@ -5,8 +5,7 @@ let bellFinish = false;
 let bellStartFinish = false;
 let silence = false;
 let currentPage = 'timer';
-let backgroundMusic;
-let audio;
+let music;
 let songtitle;
 let bellSound;
 
@@ -46,7 +45,7 @@ function startTimer() {
 
         pauseTimer();
         stopBell();
-        if (backgroundMusic) audio.pause();
+        pauseMusic();
 
         startPauseButton.classList.remove('control__pause');
         startPauseButton.querySelector('span').textContent = 'Play';
@@ -63,6 +62,9 @@ function startTimer() {
         startPauseButton.classList.add('fa-pause');
         startPauseButton.querySelector('span').textContent = 'Pause';
 
+        playMusic();
+
+
         if (!pausedTime) {
 
             if (!silence && !bellFinish) { // Play the bell if is not silence or played at the end
@@ -70,7 +72,7 @@ function startTimer() {
                 playBell();
             }
 
-            if (backgroundMusic) playBackgroundMusic(backgroundMusic);
+            if (music) playMusic(music);
         }
 
         intervalId = setInterval(() => {
@@ -131,12 +133,7 @@ function stopTimer() {
 
     if (startPauseButton) startPauseButton.classList.remove('fa-pause'); startPauseButton.classList.add('fa-play');
 
-    if (backgroundMusic) {
-        audio.pause();
-        audio.currentTime = 0;
-        audio = null;
-        backgroundMusic = null;
-    }
+    stopMusic();
 }
 function playBell() {
 
@@ -316,16 +313,17 @@ function showMusicPlaylist(event) {
 
             const imgElement = track1.querySelector('img');
 
-            if (!backgroundMusic) {
+            if (!music) {
                 if (imgElement) imgElement.classList.add('track__img--active');
-                backgroundMusic = 'track1';
+                music = 'track1';
                 songtitle = 'That Zen Moment';
+
 
             } else {
                 tracksImg.forEach(tracksImg => {
                     tracksImg.classList.remove('track__img--active');
                 });
-                backgroundMusic = null;
+                music = null;
                 songtitle = 'No song selected';
             }
         });
@@ -333,17 +331,17 @@ function showMusicPlaylist(event) {
         if (track2) track2.addEventListener('click', () => {
 
             const imgElement = track2.querySelector('img');
-            if (!backgroundMusic) {
+            if (!music) {
 
                 if (imgElement) imgElement.classList.add('track__img--active');
-                backgroundMusic = 'track2';
+                music = 'track2';
                 songtitle = 'River Flute';
 
             } else {
                 tracksImg.forEach(tracksImg => {
                     tracksImg.classList.remove('track__img--active');
                 });
-                backgroundMusic = null;
+                music = null;
                 songtitle = 'No song selected';
             }
         });
@@ -351,16 +349,16 @@ function showMusicPlaylist(event) {
         if (track3) track3.addEventListener('click', () => {
 
             const imgElement = track3.querySelector('img');
-            if (!backgroundMusic) {
+            if (!music) {
                 if (imgElement) imgElement.classList.add('track__img--active');
-                backgroundMusic = 'track3';
+                music = 'track3';
                 songtitle = 'Ever Mindful';
 
             } else {
                 tracksImg.forEach(tracksImg => {
                     tracksImg.classList.remove('track__img--active');
                 });
-                backgroundMusic = null;
+                music = null;
                 songtitle = 'No song selected';
             }
 
@@ -370,15 +368,15 @@ function showMusicPlaylist(event) {
 
             const imgElement = track4.querySelector('img');
 
-            if (!backgroundMusic) {
+            if (!music) {
                 if (imgElement) imgElement.classList.add('track__img--active');
-                backgroundMusic = 'track4';
+                music = 'track4';
                 songtitle = 'Ethereal Relaxation';
             } else {
                 tracksImg.forEach(tracksImg => {
                     tracksImg.classList.remove('track__img--active');
                 });
-                backgroundMusic = null;
+                music = null;
                 songtitle = 'No song selected';
             }
         });
@@ -388,28 +386,48 @@ function showMusicPlaylist(event) {
     currentPage = 'musicPlaylist';
 
 }
-function playBackgroundMusic(track) {
-    switch (track) {
-        case 'track1':
-            audio = new Audio('../audio/music/That%20Zen%20Moment.mp3');
-            if (audio) audio.play();
-            break;
-        case 'track2':
-            audio = new Audio('../audio/music/River%20Flute.mp3');
-            if (audio) audio.play();
+function playMusic(track) {
 
-            break;
-        case 'track3':
-            audio = new Audio('../audio/music/Ever%20Mindful.mp3');
-            if (audio) audio.play();
-            break;
-        case 'track4':
-            audio = new Audio('../audio/music/Ethereal%20Relaxation.mp3');
-            if (audio) audio.play();
-            break;
+    if (music && music.paused) {
+        music.play();
+    } else {
 
-        default:
-            break;
+        switch (track) {
+            case 'track1':
+                music = new Audio('../audio/music/That%20Zen%20Moment.mp3');
+                if (music) music.play();
+                break;
+            case 'track2':
+                music = new Audio('../audio/music/River%20Flute.mp3');
+                if (music) music.play();
+
+                break;
+            case 'track3':
+                music = new Audio('../audio/music/Ever%20Mindful.mp3');
+                if (music) music.play();
+                break;
+            case 'track4':
+                music = new Audio('../audio/music/Ethereal%20Relaxation.mp3');
+                if (music) music.play();
+                break;
+
+            default:
+                break;
+        }
+    }
+
+}
+
+function pauseMusic() {
+
+    if (music) music.pause();
+}
+
+function stopMusic() {
+    if (music) {
+        music.pause();
+        music.currentTime = 0;
+        music = null;
     }
 }
 function showSongTitle(songtitle) {
