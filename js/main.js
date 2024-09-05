@@ -68,7 +68,7 @@ function startTimer() {
                 playBell();
             }
 
-            if (backgroundMusic) setTimeout(() => playBackgroundMusic(backgroundMusic), 6000); // if there's a bg music, play it after the bell (bell last 6')
+            if (backgroundMusic) playBackgroundMusic(backgroundMusic);
         }
 
         intervalId = setInterval(() => {
@@ -296,30 +296,78 @@ function showMusicPlaylist(event) {
         const track2 = document.querySelector('#track2');
         const track3 = document.querySelector('#track3');
         const track4 = document.querySelector('#track4');
+        const tracksImg = document.querySelectorAll('.track__img');
 
         if (track1) track1.addEventListener('click', () => {
+
             const imgElement = track1.querySelector('img');
-            if (imgElement) imgElement.classList.add('track__img--active');
-            backgroundMusic = 'track1';
-            songtitle = 'That Zen Moment';
-        });
-        if (track2) track2.addEventListener('click', () => {
-            const imgElement = track2.querySelector('img');
-            if (imgElement) imgElement.classList.add('track__img--active');
-            backgroundMusic = 'track2';
-            songtitle = 'River Flute';
-        });
-        if (track3) track3.addEventListener('click', () => {
-            const imgElement = track3.querySelector('img');
-            if (imgElement) imgElement.classList.add('track__img--active');
-            backgroundMusic = 'Ever Mindful';
-        });
-        if (track3) track4.addEventListener('click', () => {
-            const imgElement = track4.querySelector('img');
-            if (imgElement) imgElement.classList.add('track__img--active');
-            backgroundMusic = 'Ethereal Relaxation';
+
+            if (!backgroundMusic) {
+                if (imgElement) imgElement.classList.add('track__img--active');
+                backgroundMusic = 'track1';
+                songtitle = 'That Zen Moment';
+
+            } else {
+                tracksImg.forEach(tracksImg => {
+                    tracksImg.classList.remove('track__img--active');
+                });
+                backgroundMusic = null;
+                songtitle = 'No song selected';
+            }
         });
 
+        if (track2) track2.addEventListener('click', () => {
+
+            const imgElement = track2.querySelector('img');
+            if (!backgroundMusic) {
+
+                if (imgElement) imgElement.classList.add('track__img--active');
+                backgroundMusic = 'track2';
+                songtitle = 'River Flute';
+
+            } else {
+                tracksImg.forEach(tracksImg => {
+                    tracksImg.classList.remove('track__img--active');
+                });
+                backgroundMusic = null;
+                songtitle = 'No song selected';
+            }
+        });
+
+        if (track3) track3.addEventListener('click', () => {
+
+            const imgElement = track3.querySelector('img');
+            if (!backgroundMusic) {
+                if (imgElement) imgElement.classList.add('track__img--active');
+                backgroundMusic = 'track3';
+                songtitle = 'Ever Mindful';
+
+            } else {
+                tracksImg.forEach(tracksImg => {
+                    tracksImg.classList.remove('track__img--active');
+                });
+                backgroundMusic = null;
+                songtitle = 'No song selected';
+            }
+
+        });
+
+        if (track4) track4.addEventListener('click', () => {
+
+            const imgElement = track4.querySelector('img');
+
+            if (!backgroundMusic) {
+                if (imgElement) imgElement.classList.add('track__img--active');
+                backgroundMusic = 'track4';
+                songtitle = 'Ethereal Relaxation';
+            } else {
+                tracksImg.forEach(tracksImg => {
+                    tracksImg.classList.remove('track__img--active');
+                });
+                backgroundMusic = null;
+                songtitle = 'No song selected';
+            }
+        });
 
     }
 
@@ -335,14 +383,18 @@ function playBackgroundMusic(track) {
         case 'track2':
             audio = new Audio('../audio/music/River%20Flute.mp3');
             if (audio) audio.play();
+            console.log('play track 2');
+
             break;
         case 'track3':
             audio = new Audio('../audio/music/Ever%20Mindful.mp3');
             if (audio) audio.play();
+            console.log('play track 3');
             break;
         case 'track4':
             audio = new Audio('../audio/music/Ethereal%20Relaxation.mp3');
             if (audio) audio.play();
+            console.log('play track 4');
             break;
 
         default:
