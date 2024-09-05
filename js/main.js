@@ -1,6 +1,7 @@
 let intervalId;
 let remainingTime;
 let pausedTime;
+let bellStart;
 let bellFinish = false;
 let bellStartFinish = false;
 let silence = false;
@@ -148,6 +149,7 @@ function stopBell() {
     }
 }
 function updateBellOptions(option) {
+    bellStart = (option === 'start');
     bellFinish = (option === 'finish');
     bellStartFinish = (option === 'both');
     silence = (option === 'silence');
@@ -188,10 +190,24 @@ function showBellConfig(event) {
         </div>
     `);
 
+        const startRadio = document.querySelector('#start');
         const finishRadio = document.querySelector('#finish');
         const bothRadio = document.querySelector('#both');
         const silenceRadio = document.querySelector('#silence');
 
+
+        if (bellStart) {
+            startRadio.checked = true;
+        } else if (bellFinish) {
+            finishRadio.checked = true;
+        } else if (bellStartFinish) {
+            bothRadio.checked = true;
+        } else if (silence) {
+            silenceRadio.checked = true;
+        }
+
+
+        if (startRadio) startRadio.addEventListener('change', () => updateBellOptions('start'));
         if (finishRadio) finishRadio.addEventListener('change', () => updateBellOptions('finish'));
         if (bothRadio) bothRadio.addEventListener('change', () => updateBellOptions('both'));
         if (silenceRadio) silenceRadio.addEventListener('change', () => updateBellOptions('silence'))
