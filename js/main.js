@@ -309,6 +309,18 @@ function showMusicPlaylist(event) {
         const track4 = document.querySelector('#track4');
         const tracksImg = document.querySelectorAll('.track__img');
 
+
+        if (music == 'track1') {
+            track1.querySelector('img').classList.add('track__img--active');
+        } else if (music == 'track2') {
+            track2.querySelector('img').classList.add('track__img--active');
+        } else if (music == 'track3') {
+            track3.querySelector('img').classList.add('track__img--active');
+        } else if (music == 'track4') {
+            track4.querySelector('img').classList.add('track__img--active');
+        }
+
+
         if (track1) track1.addEventListener('click', () => {
 
             const imgElement = track1.querySelector('img');
