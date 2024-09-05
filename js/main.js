@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const stopButton = document.querySelector('.control__stop');
     const bellsLink = document.querySelector('#bells');
     const timerLink = document.querySelector('#timer');
-    const musicPlaylistLink = document.querySelector('#music-playlist');
+    const musicPlaylistLink = document.querySelector('#playlist');
     const increaseTimeLink = document.querySelector('.timer__increase-time');
     const decreaseTimeLink = document.querySelector('.timer__decrease-time');
     startPauseButton.addEventListener('click', startTimer);
@@ -160,7 +160,7 @@ function showBellConfig(event) {
 
         if (currentPage === 'musicPlaylist') {
 
-            let musicplaylistDiv = document.querySelector('.music-playlist');
+            let musicplaylistDiv = document.querySelector('.playlist');
             if (musicplaylistDiv) musicplaylistDiv.remove();
         }
 
@@ -201,7 +201,7 @@ function showTimer() {
 
         if (currentPage === 'musicPlaylist') {
 
-            let musicplaylistDiv = document.querySelector('.music-playlist');
+            let musicplaylistDiv = document.querySelector('.playlist');
             if (musicplaylistDiv) musicplaylistDiv.remove();
         }
 
@@ -271,23 +271,23 @@ function showMusicPlaylist(event) {
         const timerContainer = document.querySelector('.timer_container');
 
         timerContainer.insertAdjacentHTML('beforeend', `
-                    <div class="music-playlist">
-                        <div class="playlist-container">
-            <div id="track1">
-                <img src="./images/audio-covers/zen.jpg" alt="">
-                <h3>That Zen Moment</h3>
+                    <div class="playlist">
+                        <div class="playlist__tracks">
+            <div class="track" id="track1">
+                <img class="track__img" src="./images/audio-covers/zen.jpg" alt="">
+                <h3 class="track__title">That Zen Moment</h3>
             </div>
-            <div id="track2">
-                <img src="./images/audio-covers/river.jpg" alt="">
-                <h3>River Flute</h3>
+            <div class="track" id="track2">
+                <img class="track__img" src="./images/audio-covers/river.jpg" alt="">
+                <h3 class="track__title">River Flute</h3>
             </div>
-            <div id="track3">
-                <img src="./images/audio-covers/mindful.jpg" alt="">
-                <h3>Ever Mindful</h3>
+            <div class="track" id="track3">
+                <img class="track__img" src="./images/audio-covers/mindful.jpg" alt="">
+                <h3 class="track__title">Ever Mindful</h3>
             </div>
-            <div id="track4">
-                <img src="./images/audio-covers/relaxation.jpg" alt="">
-                <h3>Ethereal Relaxation</h3>
+            <div class="track" id="track4">
+                <img class="track__img" src="./images/audio-covers/relaxation.jpg" alt="">
+                <h3 class="track__title">Ethereal Relaxation</h3>
             </div>
         </div>
         `);
@@ -298,17 +298,25 @@ function showMusicPlaylist(event) {
         const track4 = document.querySelector('#track4');
 
         if (track1) track1.addEventListener('click', () => {
+            const imgElement = track1.querySelector('img');
+            if (imgElement) imgElement.classList.add('track__img--active');
             backgroundMusic = 'track1';
             songtitle = 'That Zen Moment';
         });
         if (track2) track2.addEventListener('click', () => {
+            const imgElement = track2.querySelector('img');
+            if (imgElement) imgElement.classList.add('track__img--active');
             backgroundMusic = 'track2';
             songtitle = 'River Flute';
         });
         if (track3) track3.addEventListener('click', () => {
+            const imgElement = track3.querySelector('img');
+            if (imgElement) imgElement.classList.add('track__img--active');
             backgroundMusic = 'Ever Mindful';
         });
         if (track3) track4.addEventListener('click', () => {
+            const imgElement = track4.querySelector('img');
+            if (imgElement) imgElement.classList.add('track__img--active');
             backgroundMusic = 'Ethereal Relaxation';
         });
 
@@ -345,9 +353,6 @@ function showSongTitle(songtitle) {
 
     const songTitleH2 = document.querySelector('.song__title');
     if (songTitleH2) songTitleH2.textContent = songtitle;
-
-    console.log(songTitleH2);
-    console.log(songtitle);
 
 
 }
