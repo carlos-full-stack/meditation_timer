@@ -132,7 +132,10 @@ function stopTimer() {
 
     const startPauseButton = document.querySelector('.control__play-pause');
 
-    if (startPauseButton) startPauseButton.classList.remove('fa-pause'); startPauseButton.classList.add('fa-play');
+    if (startPauseButton) {
+        startPauseButton.querySelector('span').textContent = 'Play';
+        startPauseButton.classList.remove('fa-pause'); startPauseButton.classList.add('fa-play');
+    }
 
     stopMusic();
 }
@@ -141,7 +144,6 @@ function playBell() {
     bellSound = new Audio('../audio/bells/meditation-bell.mp3');
     bellSound.play();
 }
-
 function stopBell() {
     if (bellSound && !bellSound.ended) {
         bellSound.pause();
@@ -246,7 +248,7 @@ function showTimer() {
         </div>
         <div class="song">
             <i class="song__icon fa-brands fa-itunes-note"></i>
-            <h2 class="song__title">Song name</h2>
+            <h2 class="song__title">No song selected</h2>
         </div>
         <div class="control">
             <i class="control__stop fa-solid fa-stop fa-2x"></i>
@@ -259,12 +261,22 @@ function showTimer() {
         const stopButton = document.querySelector('.control__stop');
         const increaseTimeLink = document.querySelector('.timer__increase-time');
         const decreaseTimeLink = document.querySelector('.timer__decrease-time');
+        const songDiv = document.querySelector('.song');
         increaseTimeLink.addEventListener('click', increaseTime);
         decreaseTimeLink.addEventListener('click', decreaseTime);
         startPauseButton.addEventListener('click', startTimer);
         stopButton.addEventListener('click', stopTimer);
 
-        if (songtitle) showSongTitle(songtitle);
+        if (songtitle) {
+            showSongTitle(songtitle);
+
+            if (songDiv) {
+                songDiv.classList.add('song--hidden');
+                setTimeout(() => {
+                    songDiv.classList.add('song--active');
+                }, 200);
+            }
+        }
 
 
         currentPage = 'timer';
@@ -445,12 +457,10 @@ function playMusic(track) {
     }
 
 }
-
 function pauseMusic() {
 
     if (music) music.pause();
 }
-
 function stopMusic() {
     if (music) {
         music.pause();
