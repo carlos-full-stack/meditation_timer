@@ -163,13 +163,8 @@ function showBellConfig(event) {
 
         if (currentPage === 'timer') {
 
-            const timer = document.querySelector('.timer');
-            const song = document.querySelector('.song');
-            const control = document.querySelector('.control');
-
-            if (timer) timer.remove();
-            if (song) song.remove();
-            if (control) control.remove();
+            const timerContainerDiv = document.querySelector('.timer-container');
+            if (timerContainerDiv) timerContainerDiv.remove();
 
         }
 
@@ -179,9 +174,9 @@ function showBellConfig(event) {
             if (musicplaylistDiv) musicplaylistDiv.remove();
         }
 
-        const timerContainer = document.querySelector('.timer_container');
+        const container = document.querySelector('.container');
 
-        timerContainer.insertAdjacentHTML('beforeend', `
+        container.insertAdjacentHTML('beforeend', `
         <div class="bell-options">
             <ul>
                 <li><input type="radio" name="options" id="start" checked>Play only at start (by default)</li>
@@ -191,7 +186,7 @@ function showBellConfig(event) {
             </ul>
         </div>
     `);
-
+        const bellOptions = document.querySelector('.bell-options')
         const startRadio = document.querySelector('#start');
         const finishRadio = document.querySelector('#finish');
         const bothRadio = document.querySelector('#both');
@@ -214,6 +209,9 @@ function showBellConfig(event) {
         if (bothRadio) bothRadio.addEventListener('change', () => updateBellOptions('both'));
         if (silenceRadio) silenceRadio.addEventListener('change', () => updateBellOptions('silence'))
 
+
+        applyTransition(bellOptions);
+
         currentPage = 'bellConfig';
 
     }
@@ -235,25 +233,27 @@ function showTimer() {
         }
 
 
-        const timerContainer = document.querySelector('.timer_container');
+        const container = document.querySelector('.container');
 
-        timerContainer.insertAdjacentHTML('beforeend', `
-        <div class="timer">
-            <div class="timer__increase-time">+</div>
-            <div class="digits">
-                <input type="number" class="digits_minutes" min="0" max="60" value="15"><span>:</span><input
-                    type="number" class="digits_seconds" min="0" max="60" value="00">
+        container.insertAdjacentHTML('beforeend', `
+                    <div class="timer-container">
+            <div class="timer">
+                <div class="timer__increase-time">+</div>
+                <div class="digits">
+                    <input type="number" class="digits_minutes" min="0" max="60" value="15"><span>:</span><input
+                        type="number" class="digits_seconds" min="0" max="60" value="00">
+                </div>
+                <div class="timer__decrease-time">-</div>
             </div>
-            <div class="timer__decrease-time">-</div>
-        </div>
-        <div class="song">
-            <i class="song__icon fa-brands fa-itunes-note"></i>
-            <h2 class="song__title">No song selected</h2>
-        </div>
-        <div class="control">
-            <i class="control__stop fa-solid fa-stop fa-2x"></i>
-            <i class="control__play-pause control__play fa-solid fa-play fa-2x"><span>Play</span></i>
-            <i class="control__reload fa-solid fa-rotate-right fa-2x"></i>
+            <div class="song">
+                <i class="song__icon fa-brands fa-itunes-note"></i>
+                <h2 class="song__title">No song selected</h2>
+            </div>
+            <div class="control">
+                <i class="control__stop fa-solid fa-stop fa-2x"></i>
+                <i class="control__play-pause control__play fa-solid fa-play fa-2x"><span>Play</span></i>
+                <i class="control__reload fa-solid fa-rotate-right fa-2x"></i>
+            </div>
         </div>
         `);
 
@@ -261,11 +261,13 @@ function showTimer() {
         const stopButton = document.querySelector('.control__stop');
         const increaseTimeLink = document.querySelector('.timer__increase-time');
         const decreaseTimeLink = document.querySelector('.timer__decrease-time');
+        const timerContainerDiv = document.querySelector('.timer-container');
         const songDiv = document.querySelector('.song');
         increaseTimeLink.addEventListener('click', increaseTime);
         decreaseTimeLink.addEventListener('click', decreaseTime);
         startPauseButton.addEventListener('click', startTimer);
         stopButton.addEventListener('click', stopTimer);
+
 
         if (songtitle) {
             showSongTitle(songtitle);
@@ -279,9 +281,13 @@ function showTimer() {
         }
 
 
-        currentPage = 'timer';
-
+        applyTransition(timerContainerDiv);
     }
+
+
+
+
+    currentPage = 'timer';
 
 }
 function showMusicPlaylist(event) {
@@ -296,20 +302,15 @@ function showMusicPlaylist(event) {
 
         if (currentPage === 'timer') {
 
-            const timer = document.querySelector('.timer');
-            const song = document.querySelector('.song');
-            const control = document.querySelector('.control');
-
-            if (timer) timer.remove();
-            if (song) song.remove();
-            if (control) control.remove();
+            const timerContainerDiv = document.querySelector('.timer-container');
+            if (timerContainerDiv) timerContainerDiv.remove();
 
         }
 
 
-        const timerContainer = document.querySelector('.timer_container');
+        const container = document.querySelector('.container');
 
-        timerContainer.insertAdjacentHTML('beforeend', `
+        container.insertAdjacentHTML('beforeend', `
                     <div class="playlist">
                         <div class="playlist__tracks">
             <div class="track" id="track1">
@@ -336,6 +337,7 @@ function showMusicPlaylist(event) {
         const track3 = document.querySelector('#track3');
         const track4 = document.querySelector('#track4');
         const tracksImg = document.querySelectorAll('.track__img');
+        const playlistDiv = document.querySelector('.playlist');
 
 
         if (music == 'track1') {
@@ -421,6 +423,8 @@ function showMusicPlaylist(event) {
             }
         });
 
+        applyTransition(playlistDiv);
+
     }
 
     currentPage = 'musicPlaylist';
@@ -473,11 +477,19 @@ function showSongTitle(songtitle) {
     const songTitleH2 = document.querySelector('.song__title');
     if (songTitleH2) songTitleH2.textContent = songtitle;
 
-
 }
 function increaseTime() {
     document.querySelector('.digits_minutes').value++;
 }
 function decreaseTime() {
     document.querySelector('.digits_minutes').value--;
+}
+
+function applyTransition(content) {
+    if (content) {
+        content.classList.add('content--hidden');
+        setTimeout(() => {
+            content.classList.add('content--active');
+        }, 200);
+    }
 }

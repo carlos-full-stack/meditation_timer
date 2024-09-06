@@ -28,16 +28,24 @@ body {
     align-items: center;
 }
 
+.timer-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
 .content--hidden {
     opacity: 0;
 }
 
 .content--active {
     opacity: 1;
-    transition: opacity 0.2s ease-in-out;
+    transition: opacity .2s ease-in-out;
 }
 
-.timer_container {
+.container {
     position: relative;
     width: 750px;
     min-height: 600px;
@@ -90,11 +98,13 @@ body {
 }
 
 .song--hidden {
+    transform: translateY(-10px);
     opacity: 0;
+
 }
 
 .song--active {
-    transform: translateY(8px);
+    transform: translateY(0);
     opacity: 1;
 }
 
@@ -137,6 +147,7 @@ input[type=number] {
     text-align: center;
     padding: 1rem;
     font-size: 2rem;
+    cursor: pointer;
 }
 
 .control {

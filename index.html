@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <div class="timer_container">
+    <div class="container">
         <div class="options">
             <ul>
                 <li><a href="#" id="timer">Timer</a></li>
@@ -20,22 +20,24 @@
                 <li><a href="#" id="bells">Bells</a></li>
             </ul>
         </div>
-        <div class="timer">
-            <div class="timer__increase-time">+</div>
-            <div class="digits">
-                <input type="number" class="digits_minutes" min="0" max="60" value="15"><span>:</span><input
-                    type="number" class="digits_seconds" min="0" max="60" value="00">
+        <div class="timer-container">
+            <div class="timer">
+                <div class="timer__increase-time">+</div>
+                <div class="digits">
+                    <input type="number" class="digits_minutes" min="0" max="60" value="15"><span>:</span><input
+                        type="number" class="digits_seconds" min="0" max="60" value="00">
+                </div>
+                <div class="timer__decrease-time">-</div>
             </div>
-            <div class="timer__decrease-time">-</div>
-        </div>
-        <div class="song">
-            <i class="song__icon fa-brands fa-itunes-note"></i>
-            <h2 class="song__title">No song selected</h2>
-        </div>
-        <div class="control">
-            <i class="control__stop fa-solid fa-stop fa-2x"></i>
-            <i class="control__play-pause control__play fa-solid fa-play fa-2x"><span>Play</span></i>
-            <i class="control__reload fa-solid fa-rotate-right fa-2x"></i>
+            <div class="song">
+                <i class="song__icon fa-brands fa-itunes-note"></i>
+                <h2 class="song__title">No song selected</h2>
+            </div>
+            <div class="control">
+                <i class="control__stop fa-solid fa-stop fa-2x"></i>
+                <i class="control__play-pause control__play fa-solid fa-play fa-2x"><span>Play</span></i>
+                <i class="control__reload fa-solid fa-rotate-right fa-2x"></i>
+            </div>
         </div>
     </div>
     <script src="./js/main.js"></script>
