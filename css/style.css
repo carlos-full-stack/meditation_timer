@@ -210,22 +210,51 @@ input[type=number] {
 }
 
 .bell-options ul {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    list-style-type: none;
+    margin-top: 2rem;
+    padding: 0;
+    gap: 2rem;
+}
+
+.option-container {
+    position: relative;
     display: flex;
     flex-direction: column;
-    gap: 1.8rem;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+    text-align: center;
+    width: 150px;
+    height: 150px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-.bell-options li {
-    list-style: none;
-    font-size: 1.2rem;
+.option-container i {
+    position: absolute;
+    top: 10px;
+    right: 10px;
 }
 
-input[type='radio'] {
-    margin-right: 1rem;
+svg {
+    width: 50px;
+    height: 50px;
 }
 
-.bell-options ul {
-    padding: 0;
+.option-container:hover {
+    background-color: #ffffff5e;
+}
+
+.option-container input[type="radio"] {
+    display: none;
+}
+
+.option-container--active {
+    border: solid 1px #5b7a84;
 }
 
 .playlist {
