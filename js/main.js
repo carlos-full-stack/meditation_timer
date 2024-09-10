@@ -1,9 +1,10 @@
 let intervalId;
 let remainingTime;
-let pausedTime;
+let pausedTime = null;
 let currentPage = 'timer';
-let music;
-let songtitle;
+let music = null;
+let songs = {};
+let selectedSongId = null;
 let bellSound;
 let bellTime = 'start';
 
@@ -39,7 +40,7 @@ function startTimer() {
 
     const startPauseButton = document.querySelector('.control__play-pause');
 
-    if (intervalId) {
+    if (intervalId) {     // Si hay un contandor en marcha -> parar
 
         pauseTimer();
         stopBell();
@@ -51,7 +52,7 @@ function startTimer() {
         startPauseButton.classList.add('fa-play');
     } else {
 
-        let totalTime = pausedTime || getTime()
+        let totalTime = pausedTime || getTime()  // Si no hay un contandor en marcha / esta detenido -> empezar / reanudar
 
         remainingTime = totalTime;
 
@@ -60,19 +61,21 @@ function startTimer() {
         startPauseButton.classList.add('fa-pause');
         startPauseButton.querySelector('span').textContent = 'Pause';
 
-        playMusic();
-
 
         if (!pausedTime) {
 
+            playMusic();
 
             if (bellTime !== 'silence' && bellTime !== 'finish') { // Play the bell if is not silence or played at the end
 
                 playBell();
             }
 
-            if (music) playMusic(music);
+        } else {
+            resumeMusic();
+
         }
+
 
         intervalId = setInterval(() => {
             remainingTime -= 1000;
@@ -233,7 +236,6 @@ function showBellConfig(event) {
 
                 radioButton.closest('.option-container').classList.add('option-container--active');
                 bellTime = radioButton.id;
-                console.log(bellTime);
 
             });
         });
@@ -296,16 +298,16 @@ function showTimer() {
         stopButton.addEventListener('click', stopTimer);
 
 
-        if (songtitle) {
-            showSongTitle(songtitle);
+        // if (songs[id].title) {
+        //     showSongTitle(songs[id].title);
 
-            if (songDiv) {
-                songDiv.classList.add('song--hidden');
-                setTimeout(() => {
-                    songDiv.classList.add('song--active');
-                }, 200);
-            }
-        }
+        //     if (songDiv) {
+        //         songDiv.classList.add('song--hidden');
+        //         setTimeout(() => {
+        //             songDiv.classList.add('song--active');
+        //         }, 200);
+        //     }
+        // }
 
 
         applyTransition(timerContainerDiv);
@@ -317,6 +319,7 @@ function showTimer() {
     currentPage = 'timer';
 
 }
+
 function showMusicPlaylist(event) {
 
     if (currentPage !== 'musicPlaylist') {
@@ -338,116 +341,63 @@ function showMusicPlaylist(event) {
         const container = document.querySelector('.container');
 
         container.insertAdjacentHTML('beforeend', `
-                    <div class="playlist">
-                        <div class="playlist__tracks">
-            <div class="track" id="track1">
-                <img class="track__img" src="./images/audio-covers/zen.jpg" alt="">
-                <h3 class="track__title">That Zen Moment</h3>
-            </div>
-            <div class="track" id="track2">
-                <img class="track__img" src="./images/audio-covers/river.jpg" alt="">
-                <h3 class="track__title">River Flute</h3>
-            </div>
-            <div class="track" id="track3">
-                <img class="track__img" src="./images/audio-covers/mindful.jpg" alt="">
-                <h3 class="track__title">Ever Mindful</h3>
-            </div>
-            <div class="track" id="track4">
-                <img class="track__img" src="./images/audio-covers/relaxation.jpg" alt="">
-                <h3 class="track__title">Ethereal Relaxation</h3>
-            </div>
-        </div>
+<ul class="playlist">
+    <label for="song1">
+        <li class="song">
+            <img class="song__img" src="./images/audio-covers/zen.jpg" alt="">
+            <h3 class="song__title">That Zen Moment</h3>
+            <input type="radio" name="options" id="song1">
+        </li>
+    </label>
+    <label for="song2">
+        <li class="song">
+            <img class="song__img" src="./images/audio-covers/river.jpg" alt="">
+            <h3 class="song__title">River Flute</h3>
+            <input type="radio" name="options" id="song2">
+        </li>
+    </label>
+    <label for="song3">
+        <li class="song">
+            <img class="song__img" src="./images/audio-covers/mindful.jpg" alt="">
+            <h3 class="song__title">Ever Mindful</h3>
+            <input type="radio" name="options" id="song3">
+        </li>
+    </label>
+    <label for="song4">
+        <li class="song">
+            <img class="song__img" src="./images/audio-covers/relaxation.jpg" alt="">
+            <h3 class="song__title">Ethereal Relaxation</h3>
+            <input type="radio" name="options" id="song4">
+        </li>
+    </label>
+</ul>
         `);
 
-        const track1 = document.querySelector('#track1');
-        const track2 = document.querySelector('#track2');
-        const track3 = document.querySelector('#track3');
-        const track4 = document.querySelector('#track4');
-        const tracksImg = document.querySelectorAll('.track__img');
+        const songRadioButtons = document.querySelectorAll('input[type="radio"]');
+        const songImgs = document.querySelectorAll('img');
         const playlistDiv = document.querySelector('.playlist');
 
 
-        if (music == 'track1') {
-            track1.querySelector('img').classList.add('track__img--active');
-        } else if (music == 'track2') {
-            track2.querySelector('img').classList.add('track__img--active');
-        } else if (music == 'track3') {
-            track3.querySelector('img').classList.add('track__img--active');
-        } else if (music == 'track4') {
-            track4.querySelector('img').classList.add('track__img--active');
-        }
-
-
-        if (track1) track1.addEventListener('click', () => {
-
-            const imgElement = track1.querySelector('img');
-
-            if (!music) {
-                if (imgElement) imgElement.classList.add('track__img--active');
-                music = 'track1';
-                songtitle = 'That Zen Moment';
-
-
-            } else {
-                tracksImg.forEach(tracksImg => {
-                    tracksImg.classList.remove('track__img--active');
-                });
-                music = null;
-                songtitle = 'No song selected';
+        songRadioButtons.forEach(songButton => {
+            if (selectedSongId == songRadioButtons.id) {
+                songButton.parentElement.querySelector('img').classList.add('song__img--active');
             }
         });
 
-        if (track2) track2.addEventListener('click', () => {
 
-            const imgElement = track2.querySelector('img');
-            if (!music) {
-
-                if (imgElement) imgElement.classList.add('track__img--active');
-                music = 'track2';
-                songtitle = 'River Flute';
-
-            } else {
-                tracksImg.forEach(tracksImg => {
-                    tracksImg.classList.remove('track__img--active');
+        songRadioButtons.forEach(songButton => {
+            songButton.addEventListener('change', () => {
+                songImgs.forEach(img => {
+                    img.classList.remove('song__img--active');
                 });
-                music = null;
-                songtitle = 'No song selected';
-            }
-        });
 
-        if (track3) track3.addEventListener('click', () => {
+                songButton.parentElement.querySelector('img').classList.add('song__img--active');
+                selectedSongId = songButton.id;
 
-            const imgElement = track3.querySelector('img');
-            if (!music) {
-                if (imgElement) imgElement.classList.add('track__img--active');
-                music = 'track3';
-                songtitle = 'Ever Mindful';
+                console.log(selectedSongId);
 
-            } else {
-                tracksImg.forEach(tracksImg => {
-                    tracksImg.classList.remove('track__img--active');
-                });
-                music = null;
-                songtitle = 'No song selected';
-            }
 
-        });
-
-        if (track4) track4.addEventListener('click', () => {
-
-            const imgElement = track4.querySelector('img');
-
-            if (!music) {
-                if (imgElement) imgElement.classList.add('track__img--active');
-                music = 'track4';
-                songtitle = 'Ethereal Relaxation';
-            } else {
-                tracksImg.forEach(tracksImg => {
-                    tracksImg.classList.remove('track__img--active');
-                });
-                music = null;
-                songtitle = 'No song selected';
-            }
+            });
         });
 
         applyTransition(playlistDiv);
@@ -457,41 +407,50 @@ function showMusicPlaylist(event) {
     currentPage = 'musicPlaylist';
 
 }
-function playMusic(track) {
 
-    if (music && music.paused) {
-        music.play();
-    } else {
+function playMusic() {
 
-        switch (track) {
-            case 'track1':
-                music = new Audio('../audio/music/That%20Zen%20Moment.mp3');
-                if (music) music.play();
-                break;
-            case 'track2':
-                music = new Audio('../audio/music/River%20Flute.mp3');
-                if (music) music.play();
-
-                break;
-            case 'track3':
-                music = new Audio('../audio/music/Ever%20Mindful.mp3');
-                if (music) music.play();
-                break;
-            case 'track4':
-                music = new Audio('../audio/music/Ethereal%20Relaxation.mp3');
-                if (music) music.play();
-                break;
-
-            default:
-                break;
+    songs = {
+        song1: {
+            id: 'song1',
+            title: 'That Zen Moment',
+            url: '../audio/music/That%20Zen%20Moment.mp3'
+        },
+        song2: {
+            id: 'song2',
+            title: 'River Flute',
+            url: '../audio/music/River%20Flute.mp3'
+        },
+        song3: {
+            id: 'song3',
+            title: 'Ever Mindful',
+            url: '../audio/music/Ever%20Mindful.mp3'
+        },
+        song4: {
+            id: 'song4',
+            title: 'Ethereal Relaxation',
+            url: '../audio/music/Ethereal%20Relaxation.mp3'
         }
+    };
+
+    if (songs[selectedSongId]) {
+        music = new Audio(songs[selectedSongId].url);
+        if (music) music.play();
     }
 
 }
 function pauseMusic() {
-
-    if (music) music.pause();
+    if (music) {
+        pausedTime = music.currentTime;
+        music.pause();
+    }
 }
+
+function resumeMusic() {
+    if (music) music.currentTime = pausedTime;
+    music.play();
+}
+
 function stopMusic() {
     if (music) {
         music.pause();

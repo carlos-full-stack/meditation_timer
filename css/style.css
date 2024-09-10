@@ -257,47 +257,43 @@ svg {
     border: solid 1px #5b7a84;
 }
 
-.playlist {
-    width: 80%;
-    display: flex;
-    justify-content: center;
-    margin-top: 3rem;
-}
 
-.playlist__tracks {
+.playlist {
     display: grid;
     width: 85%;
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
+    padding: 0;
 }
 
-.playlist__tracks div {
+.song {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-
-.track {
     cursor: pointer;
 }
 
-.track__img {
+.song__img {
     width: 125px;
     height: 125px;
     border: 4px solid transparent;
     border-radius: 50% 50%;
 }
 
-.track__img:hover {
+.song input[type="radio"] {
+    display: none;
+}
+
+.song__img:hover {
     border: solid 4px #668994b2;
 }
 
-.track__img--active {
+.song__img--active {
     border: solid 4px #668994;
 }
 
-.track__title {
+.song__title {
     font-size: 1.1rem;
     font-weight: 300;
     margin-bottom: 0rem;
