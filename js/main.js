@@ -117,8 +117,7 @@ function pauseTimer() {
 }
 function stopTimer() {
 
-    stopBell();
-
+    selectedSong.title = null;
 
     if (intervalId) {
         clearInterval(intervalId);
@@ -137,6 +136,8 @@ function stopTimer() {
         startPauseButton.classList.remove('fa-pause'); startPauseButton.classList.add('fa-play');
     }
 
+    stopBell();
+    updateMusicTitle();
     stopMusic();
 }
 function playBell() {
@@ -295,7 +296,7 @@ function showTimer() {
         startPauseButton.addEventListener('click', startTimer);
         stopButton.addEventListener('click', stopTimer);
 
-        showMusicTitle()
+        updateMusicTitle();
 
         applyTransition(timerContainerDiv);
 
@@ -367,7 +368,7 @@ function showMusicPlaylist() {
 
 
         songRadioButtons.forEach(songButton => {
-            if (selectedSong.id == songRadioButtons.id) {
+            if (selectedSong.id == songButton.id) {
                 songButton.parentElement.querySelector('img').classList.add('song__img--active');
             }
         });
@@ -424,19 +425,28 @@ function stopMusic() {
         music = null;
     }
 }
-function showMusicTitle() {
+function updateMusicTitle() {
 
     const musicDiv = document.querySelector('.music');
-
     const musicTitle = document.querySelector('.music__title');
-    if (musicTitle) musicTitle.textContent = selectedSong.title;
+    if (musicTitle && selectedSong.title) {
+        musicTitle.textContent = selectedSong.title;
+
+    } else if (!selectedSong.title) {
+
+        musicTitle.textContent = 'No music selected';
+
+    }
 
     if (musicDiv) {
         musicDiv.classList.add('music--hidden');
         setTimeout(() => {
             musicDiv.classList.add('music--active');
         }, 200);
+
     }
+
+
 
 }
 function increaseTime() {
