@@ -90,25 +90,25 @@ body {
     text-decoration: none;
 }
 
-.song {
+.music {
     display: flex;
     align-items: center;
     gap: 1.2rem;
     transition: transform 1s ease-in-out, opacity 1s ease-in-out;
 }
 
-.song--hidden {
+.music--hidden {
     transform: translateY(-10px);
     opacity: 0;
 
 }
 
-.song--active {
+.music--active {
     transform: translateY(0);
     opacity: 1;
 }
 
-.song__title {
+.music__title {
     font-size: 1.2rem;
     margin: 0;
     font-weight: normal;
@@ -260,9 +260,10 @@ svg {
 
 .playlist {
     display: grid;
-    width: 85%;
+    width: 60%;
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
+    margin-top: 3rem;
     padding: 0;
 }
 

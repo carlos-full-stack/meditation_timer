@@ -3,8 +3,7 @@ let remainingTime;
 let pausedTime = null;
 let currentPage = 'timer';
 let music = null;
-let songs = {};
-let selectedSongId = null;
+let selectedSong = {};
 let bellSound;
 let bellTime = 'start';
 
@@ -152,7 +151,7 @@ function stopBell() {
     }
 }
 
-function showBellConfig(event) {
+function showBellConfig() {
 
     if (currentPage !== 'bellConfig') {
 
@@ -274,9 +273,9 @@ function showTimer() {
                 </div>
                 <div class="timer__decrease-time">-</div>
             </div>
-            <div class="song">
-                <i class="song__icon fa-brands fa-itunes-note"></i>
-                <h2 class="song__title">No song selected</h2>
+            <div class="music">
+                <i class="music__icon fa-brands fa-itunes-note"></i>
+                <h2 class="music__title">No music selected</h2>
             </div>
             <div class="control">
                 <i class="control__stop fa-solid fa-stop fa-2x"></i>
@@ -291,36 +290,24 @@ function showTimer() {
         const increaseTimeLink = document.querySelector('.timer__increase-time');
         const decreaseTimeLink = document.querySelector('.timer__decrease-time');
         const timerContainerDiv = document.querySelector('.timer-container');
-        const songDiv = document.querySelector('.song');
         increaseTimeLink.addEventListener('click', increaseTime);
         decreaseTimeLink.addEventListener('click', decreaseTime);
         startPauseButton.addEventListener('click', startTimer);
         stopButton.addEventListener('click', stopTimer);
 
-
-        // if (songs[id].title) {
-        //     showSongTitle(songs[id].title);
-
-        //     if (songDiv) {
-        //         songDiv.classList.add('song--hidden');
-        //         setTimeout(() => {
-        //             songDiv.classList.add('song--active');
-        //         }, 200);
-        //     }
-        // }
-
+        showMusicTitle()
 
         applyTransition(timerContainerDiv);
+
+
     }
-
-
 
 
     currentPage = 'timer';
 
 }
 
-function showMusicPlaylist(event) {
+function showMusicPlaylist() {
 
     if (currentPage !== 'musicPlaylist') {
 
@@ -378,8 +365,9 @@ function showMusicPlaylist(event) {
         const playlistDiv = document.querySelector('.playlist');
 
 
+
         songRadioButtons.forEach(songButton => {
-            if (selectedSongId == songRadioButtons.id) {
+            if (selectedSong.id == songRadioButtons.id) {
                 songButton.parentElement.querySelector('img').classList.add('song__img--active');
             }
         });
@@ -392,13 +380,13 @@ function showMusicPlaylist(event) {
                 });
 
                 songButton.parentElement.querySelector('img').classList.add('song__img--active');
-                selectedSongId = songButton.id;
-
-                console.log(selectedSongId);
+                selectedSong.id = songButton.id;
+                selectedSong.title = songs[songButton.id].title;
 
 
             });
         });
+
 
         applyTransition(playlistDiv);
 
@@ -410,33 +398,11 @@ function showMusicPlaylist(event) {
 
 function playMusic() {
 
-    songs = {
-        song1: {
-            id: 'song1',
-            title: 'That Zen Moment',
-            url: '../audio/music/That%20Zen%20Moment.mp3'
-        },
-        song2: {
-            id: 'song2',
-            title: 'River Flute',
-            url: '../audio/music/River%20Flute.mp3'
-        },
-        song3: {
-            id: 'song3',
-            title: 'Ever Mindful',
-            url: '../audio/music/Ever%20Mindful.mp3'
-        },
-        song4: {
-            id: 'song4',
-            title: 'Ethereal Relaxation',
-            url: '../audio/music/Ethereal%20Relaxation.mp3'
-        }
-    };
-
-    if (songs[selectedSongId]) {
-        music = new Audio(songs[selectedSongId].url);
+    if (songs[selectedSong.id]) {
+        music = new Audio(songs[selectedSong.id].url);
         if (music) music.play();
     }
+
 
 }
 function pauseMusic() {
@@ -458,10 +424,19 @@ function stopMusic() {
         music = null;
     }
 }
-function showSongTitle(songtitle) {
+function showMusicTitle() {
 
-    const songTitleH2 = document.querySelector('.song__title');
-    if (songTitleH2) songTitleH2.textContent = songtitle;
+    const musicDiv = document.querySelector('.music');
+
+    const musicTitle = document.querySelector('.music__title');
+    if (musicTitle) musicTitle.textContent = selectedSong.title;
+
+    if (musicDiv) {
+        musicDiv.classList.add('music--hidden');
+        setTimeout(() => {
+            musicDiv.classList.add('music--active');
+        }, 200);
+    }
 
 }
 function increaseTime() {
