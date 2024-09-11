@@ -10,6 +10,7 @@ let bellTime = 'start';
 document.addEventListener('DOMContentLoaded', () => {
     const startPauseButton = document.querySelector('.control__play-pause');
     const stopButton = document.querySelector('.control__stop');
+    const reloadButton = document.querySelector('.control__reload');
     const bellsLink = document.querySelector('#bells');
     const timerLink = document.querySelector('#timer');
     const musicPlaylistLink = document.querySelector('#playlist');
@@ -17,12 +18,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const decreaseTimeLink = document.querySelector('.timer__decrease-time');
     startPauseButton.addEventListener('click', startTimer);
     stopButton.addEventListener('click', stopTimer);
+    reloadButton.addEventListener('click', restoreSession);
     bellsLink.addEventListener('click', showBellConfig)
     timerLink.addEventListener('click', showTimer)
     musicPlaylistLink.addEventListener('click', showMusicPlaylist)
     increaseTimeLink.addEventListener('click', increaseTime)
     decreaseTimeLink.addEventListener('click', decreaseTime)
 });
+
+
 
 function getTime() {
 
@@ -115,9 +119,7 @@ function pauseTimer() {
 
     }
 }
-function stopTimer() {
-
-    selectedSong.title = null;
+function stopTimer(event) {
 
     if (intervalId) {
         clearInterval(intervalId);
@@ -136,8 +138,14 @@ function stopTimer() {
         startPauseButton.classList.remove('fa-pause'); startPauseButton.classList.add('fa-play');
     }
 
+    if (event instanceof Event) {
+        selectedSong = {};
+        updateMusicTitle();
+        console.log(`-> (BOTON) Se ha pulsado el boton de STOP. El valor de selectedSong es de ${selectedSong} `);
+
+    }
+
     stopBell();
-    updateMusicTitle();
     stopMusic();
 }
 function playBell() {
@@ -237,6 +245,8 @@ function showBellConfig() {
                 radioButton.closest('.option-container').classList.add('option-container--active');
                 bellTime = radioButton.id;
 
+                saveSession(bellTime);
+
             });
         });
 
@@ -288,6 +298,7 @@ function showTimer() {
 
         const startPauseButton = document.querySelector('.control__play-pause');
         const stopButton = document.querySelector('.control__stop');
+        const reloadButton = document.querySelector('.control__reload');
         const increaseTimeLink = document.querySelector('.timer__increase-time');
         const decreaseTimeLink = document.querySelector('.timer__decrease-time');
         const timerContainerDiv = document.querySelector('.timer-container');
@@ -295,6 +306,7 @@ function showTimer() {
         decreaseTimeLink.addEventListener('click', decreaseTime);
         startPauseButton.addEventListener('click', startTimer);
         stopButton.addEventListener('click', stopTimer);
+        reloadButton.addEventListener('click', restoreSession);
 
         updateMusicTitle();
 
@@ -384,6 +396,8 @@ function showMusicPlaylist() {
                 selectedSong.id = songButton.id;
                 selectedSong.title = songs[songButton.id].title;
 
+                saveSession(selectedSong);
+
 
             });
         });
@@ -399,10 +413,14 @@ function showMusicPlaylist() {
 
 function playMusic() {
 
-    if (songs[selectedSong.id]) {
-        music = new Audio(songs[selectedSong.id].url);
-        if (music) music.play();
+    if (selectedSong && selectedSong.id) {
+
+        if (songs[selectedSong.id]) {
+            music = new Audio(songs[selectedSong.id].url);
+        }
     }
+
+    if (music) music.play();
 
 
 }
@@ -427,16 +445,17 @@ function stopMusic() {
 }
 function updateMusicTitle() {
 
+
     const musicDiv = document.querySelector('.music');
     const musicTitle = document.querySelector('.music__title');
-    if (musicTitle && selectedSong.title) {
+
+    if (selectedSong.title) {
         musicTitle.textContent = selectedSong.title;
-
-    } else if (!selectedSong.title) {
-
-        musicTitle.textContent = 'No music selected';
+    } else {
+        musicTitle.textContent = 'No music selected'
 
     }
+
 
     if (musicDiv) {
         musicDiv.classList.add('music--hidden');
@@ -445,10 +464,37 @@ function updateMusicTitle() {
         }, 200);
 
     }
+}
+function saveSession() {
 
+    if (bellTime) {
+        sessionStorage.setItem('bellTime', bellTime);
+        console.log(`La campana guardada es ${sessionStorage.getItem('bellTime')}`);
 
+    } if (selectedSong) {
+        sessionStorage.setItem('selectedSong', JSON.stringify(selectedSong));
+        console.log(`La musica guardada es ${sessionStorage.getItem('selectedSong')}`);
+    }
 
 }
+
+function restoreSession() {
+
+    if (sessionStorage.getItem('bellTime')) {
+        bellTime = sessionStorage.getItem('bellTime');
+        console.log(`Has restaurado el valor de bellTime a: ${bellTime}`);
+
+    } if (sessionStorage.getItem('selectedSong')) {
+        selectedSong = JSON.parse(sessionStorage.getItem('selectedSong'));
+        console.log(`La musica guardada es ${selectedSong}`);
+
+        updateMusicTitle()
+        stopTimer()
+        startTimer();
+
+    }
+}
+
 function increaseTime() {
     document.querySelector('.digits_minutes').value++;
 }
