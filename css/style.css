@@ -34,6 +34,11 @@ body {
     justify-content: center;
     align-items: center;
     gap: 2rem;
+    transition: margin-bottom .5s ease-in-out;
+}
+
+.timer-container--active {
+    margin-bottom: 5rem;
 }
 
 .content--hidden {
@@ -75,6 +80,10 @@ body {
     font-size: 1.3rem;
     position: absolute;
     top: 3.5rem;
+}
+
+.options--active {
+    display: none;
 }
 
 .options ul {
@@ -140,6 +149,11 @@ input[type=number] {
     border: solid 3px var(--primary-color);
     aspect-ratio: 1;
     border-radius: 50% 50%;
+    transition: min-width .5s ease-in-out;
+}
+
+.timer--active {
+    min-width: 250px;
 }
 
 .timer__increase-time,

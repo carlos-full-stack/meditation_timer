@@ -6,6 +6,9 @@ let music = null;
 let selectedSong = {};
 let bellSound;
 let bellTime = 'start';
+let timerIsHighlighted = false;
+let isStopButton;
+let isReloadButton;
 
 document.addEventListener('DOMContentLoaded', () => {
     const startPauseButton = document.querySelector('.control__play-pause');
@@ -53,6 +56,9 @@ function startTimer() {
         startPauseButton.querySelector('span').textContent = 'Play';
         startPauseButton.classList.remove('fa-pause');
         startPauseButton.classList.add('fa-play');
+
+        highlightTimer();
+
     } else {
 
         let totalTime = pausedTime || getTime()  // Si no hay un contandor en marcha / esta detenido -> empezar / reanudar
@@ -63,6 +69,8 @@ function startTimer() {
         startPauseButton.classList.remove('fa-play');
         startPauseButton.classList.add('fa-pause');
         startPauseButton.querySelector('span').textContent = 'Pause';
+
+        highlightTimer()
 
 
         if (!pausedTime) {
@@ -102,6 +110,57 @@ function startTimer() {
         }, 1000);
     }
 }
+
+function highlightTimer() {
+    const optionsDiv = document.querySelector('.options');
+    const timerContainerDiv = document.querySelector('.timer-container');
+    const timerDiv = document.querySelector('.timer');
+
+    if (!timerIsHighlighted) {
+
+        console.log(`>> A accedido a la funcion highlightTimer().  timerIsHighlighted es: ${timerIsHighlighted}`);
+
+        if (!isStopButton) {
+
+            console.log(` >> Añade la clase porque isStopButton es false: ${isStopButton}. isReloadButton es ${isReloadButton} `);
+
+            optionsDiv.classList.add('options--active');
+            timerDiv.classList.add('timer--active');
+            timerContainerDiv.classList.add('timer-container--active');
+            timerIsHighlighted = true;
+
+            console.log(`>> Se añade clase. timerIsHighlighted es: ${timerIsHighlighted}`);
+
+        }
+
+
+    } else {
+
+        if (!isReloadButton) {
+
+            console.log(`>> Retira la clase porque isReloadButton es false: ${isReloadButton}`);
+
+            optionsDiv.classList.remove('options--active');
+            timerDiv.classList.remove('timer--active');
+            timerContainerDiv.classList.remove('timer-container--active');
+            timerIsHighlighted = false;
+
+            console.log(`>> Se retira clase. timerIsHighlighted es: ${timerIsHighlighted}`);
+        }
+
+        // console.log(`timerIsHighlighted es ${timerIsHighlighted} y isReloadButton es ${isReloadButton}`);
+
+
+
+    }
+
+    isReloadButton = undefined;
+    isStopButton = undefined;
+
+    console.log(` >> Al finalizar la ejecucion de la funcion highlightTimer(), los valores son:  isStopButton: ${isStopButton}. isReloadButton: ${isReloadButton} `);
+}
+
+
 function updateDisplay(miliseconds) {
 
     const totalSeconds = Math.floor(miliseconds / 1000);
@@ -138,11 +197,23 @@ function stopTimer(event) {
         startPauseButton.classList.remove('fa-pause'); startPauseButton.classList.add('fa-play');
     }
 
-    if (event instanceof Event) {
-        selectedSong = {};
-        updateMusicTitle();
-        console.log(`-> (BOTON) Se ha pulsado el boton de STOP. El valor de selectedSong es de ${selectedSong} `);
 
+
+    if (event instanceof Event) {
+
+        // Stop generado por el boton
+
+        selectedSong = {};
+        isReloadButton = false;
+        isStopButton = true
+        updateMusicTitle();
+        highlightTimer();
+        console.log(`-> (BOTON) Se ha pulsado el boton de STOP. El valor de isReloadButton es de ${isReloadButton} y el de isStopButton es de  ${isStopButton}`);
+
+    } else {
+        isReloadButton = true;
+        isStopButton = false;
+        console.log(`Ejecutado STOP. isReloadButton tiene un valor de:  ${isReloadButton} `);
     }
 
     stopBell();
