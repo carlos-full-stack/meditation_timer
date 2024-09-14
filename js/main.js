@@ -167,8 +167,11 @@ function updateDisplay(miliseconds) {
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = totalSeconds % 60;
 
-    if (minutes) document.querySelector('.digits_minutes').value = minutes;
-    if (seconds) document.querySelector('.digits_seconds').value = seconds;
+    const convertedMinutes = String(minutes).padStart(2, '0');
+    const convertedSeconds = String(seconds).padStart(2, '0');
+
+    if (convertedMinutes) document.querySelector('.digits_minutes').value = convertedMinutes;
+    if (convertedSeconds) document.querySelector('.digits_seconds').value = convertedSeconds;
 }
 function pauseTimer() {
     if (intervalId) {
