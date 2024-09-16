@@ -493,7 +493,12 @@ function playMusic() {
         }
     }
 
-    if (music) music.play();
+    if (music) {
+        music.play();
+    } else {
+        console.log('Music not found');
+
+    }
 
 
 }
