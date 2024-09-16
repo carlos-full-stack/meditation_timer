@@ -15,7 +15,7 @@ if (window.location.hostname === 'username.github.io') {
     basePath = '/meditation_timer';
 } else {
     basePath = '.';
-
+}
 
 document.addEventListener('DOMContentLoaded', () => {
 
