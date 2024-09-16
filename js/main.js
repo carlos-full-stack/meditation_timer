@@ -9,8 +9,16 @@ let bellTime = 'start';
 let timerIsHighlighted = false;
 let isStopButton;
 let isReloadButton;
+let basePath;
+
+if (window.location.hostname === 'username.github.io') {
+    basePath = '/meditation_timer';
+} else {
+    basePath = '.';
+
 
 document.addEventListener('DOMContentLoaded', () => {
+
     const startPauseButton = document.querySelector('.control__play-pause');
     const stopButton = document.querySelector('.control__stop');
     const reloadButton = document.querySelector('.control__reload');
@@ -27,11 +35,14 @@ document.addEventListener('DOMContentLoaded', () => {
     musicPlaylistLink.addEventListener('click', showMusicPlaylist)
     increaseTimeLink.addEventListener('click', increaseTime)
     decreaseTimeLink.addEventListener('click', decreaseTime)
-});
+
+}
+);
 
 
 
 function getTime() {
+
     const minutesInput = document.querySelector('.digits_minutes');
     const secondsInput = document.querySelector('.digits_seconds');
 
@@ -222,7 +233,7 @@ function stopTimer(event) {
 }
 function playBell() {
 
-    bellSound = new Audio('./../audio/bells/meditation-bell.mp3');
+    bellSound = new Audio(`${basePath}/../audio/bells/meditation-bell.mp3`);
     bellSound.play();
 }
 
@@ -413,32 +424,41 @@ function showMusicPlaylist() {
 
         const container = document.querySelector('.container');
 
+        let imagePath;
+
+
+        if (window.location.hostname === 'carlos-full-stack.github.io') {
+            imagePath = '/meditation_timer/audio/bells/meditation-bell.mp3';
+        } else {
+            imagePath = './audio/bells/meditation-bell.mp3';
+        }
+
         container.insertAdjacentHTML('beforeend', `
 <ul class="playlist">
     <label for="song1">
         <li class="song">
-            <img class="song__img" src="./images/audio-covers/zen.jpg" alt="">
+            <img class="song__img" src="${basePath}/images/audio-covers/zen.jpg" alt="">
             <h3 class="song__title">That Zen Moment</h3>
             <input type="radio" name="options" id="song1">
         </li>
     </label>
     <label for="song2">
         <li class="song">
-            <img class="song__img" src="./images/audio-covers/river.jpg" alt="">
+            <img class="song__img" src="${basePath}/images/audio-covers/river.jpg" alt="">
             <h3 class="song__title">River Flute</h3>
             <input type="radio" name="options" id="song2">
         </li>
     </label>
     <label for="song3">
         <li class="song">
-            <img class="song__img" src="./images/audio-covers/mindful.jpg" alt="">
+            <img class="song__img" src="${basePath}/images/audio-covers/mindful.jpg" alt="">
             <h3 class="song__title">Ever Mindful</h3>
             <input type="radio" name="options" id="song3">
         </li>
     </label>
     <label for="song4">
         <li class="song">
-            <img class="song__img" src="./images/audio-covers/relaxation.jpg" alt="">
+            <img class="song__img" src="${basePath}/images/audio-covers/relaxation.jpg" alt="">
             <h3 class="song__title">Ethereal Relaxation</h3>
             <input type="radio" name="options" id="song4">
         </li>
@@ -571,6 +591,7 @@ function restoreSession() {
 function increaseTime() {
     document.querySelector('.digits_minutes').value++;
 }
+
 function decreaseTime() {
 
     if (document.querySelector('.digits_minutes').value > 0) {
@@ -586,4 +607,8 @@ function applyTransition(content) {
             content.classList.add('content--active');
         }, 200);
     }
+}
+
+function getFullPath(relativePath) {
+    return `${basePath}${relativePath}`;
 }
