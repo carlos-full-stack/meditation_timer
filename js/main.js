@@ -423,19 +423,6 @@ function showMusicPlaylist() {
 
 
         const container = document.querySelector('.container');
-
-        let imagePath;
-
-
-        if (window.location.hostname === 'carlos-full-stack.github.io') {
-            console.log('location: github');
-
-            imagePath = '/meditation_timer/audio/bells/meditation-bell.mp3';
-        } else {
-            imagePath = './audio/bells/meditation-bell.mp3';
-            console.log('location: localhost');
-        }
-
         container.insertAdjacentHTML('beforeend', `
 <ul class="playlist">
     <label for="song1">
