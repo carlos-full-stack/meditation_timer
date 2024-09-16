@@ -222,7 +222,7 @@ function stopTimer(event) {
 }
 function playBell() {
 
-    bellSound = new Audio('../audio/bells/meditation-bell.mp3');
+    bellSound = new Audio('./../audio/bells/meditation-bell.mp3');
     bellSound.play();
 }
 
