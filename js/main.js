@@ -11,7 +11,7 @@ let isStopButton;
 let isReloadButton;
 let basePath;
 
-if (window.location.hostname === 'username.github.io') {
+if (window.location.hostname === 'carlos-full-stack.github.io') {
     basePath = '/meditation_timer';
 } else {
     basePath = '.';
@@ -428,9 +428,12 @@ function showMusicPlaylist() {
 
 
         if (window.location.hostname === 'carlos-full-stack.github.io') {
+            console.log('location: github');
+
             imagePath = '/meditation_timer/audio/bells/meditation-bell.mp3';
         } else {
             imagePath = './audio/bells/meditation-bell.mp3';
+            console.log('location: localhost');
         }
 
         container.insertAdjacentHTML('beforeend', `
