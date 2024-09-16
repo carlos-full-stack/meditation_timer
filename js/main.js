@@ -13,8 +13,11 @@ let basePath;
 
 if (window.location.hostname === 'carlos-full-stack.github.io') {
     basePath = '/meditation_timer';
+    console.log('location: github');
+
 } else {
     basePath = '.';
+    console.log('location: localhost');
 }
 
 document.addEventListener('DOMContentLoaded', () => {
