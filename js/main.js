@@ -32,16 +32,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 function getTime() {
+    const minutesInput = document.querySelector('.digits_minutes');
+    const secondsInput = document.querySelector('.digits_seconds');
 
-    const minutesInput = parseInt(document.querySelector('.digits_minutes').value);
-    const secondsInput = parseInt(document.querySelector('.digits_seconds').value);
+    let minutes = parseInt(minutesInput.value, 10);
+    let seconds = parseInt(secondsInput.value, 10);
 
-    // validacion?
+    if (isNaN(minutes) || minutes < 0) {
+        minutes = 15;
+        minutesInput.value = 15;
+    }
 
-    const totalTime = ((minutesInput * 60) + secondsInput) * 1000;
+    if (isNaN(seconds) || seconds < 0) {
+        seconds = 0;
+        secondsInput.value = '00';
+    }
+
+    const totalTime = ((minutes * 60) + seconds) * 1000;
+
     return totalTime;
-
 }
+
 function startTimer() {
 
     const startPauseButton = document.querySelector('.control__play-pause');
@@ -118,18 +129,13 @@ function highlightTimer() {
 
     if (!timerIsHighlighted) {
 
-        console.log(`>> A accedido a la funcion highlightTimer().  timerIsHighlighted es: ${timerIsHighlighted}`);
-
         if (!isStopButton) {
-
-            console.log(` >> Añade la clase porque isStopButton es false: ${isStopButton}. isReloadButton es ${isReloadButton} `);
 
             optionsDiv.classList.add('options--active');
             timerDiv.classList.add('timer--active');
             timerContainerDiv.classList.add('timer-container--active');
-            timerIsHighlighted = true;
 
-            console.log(`>> Se añade clase. timerIsHighlighted es: ${timerIsHighlighted}`);
+            timerIsHighlighted = true;
 
         }
 
@@ -138,26 +144,20 @@ function highlightTimer() {
 
         if (!isReloadButton) {
 
-            console.log(`>> Retira la clase porque isReloadButton es false: ${isReloadButton}`);
-
             optionsDiv.classList.remove('options--active');
             timerDiv.classList.remove('timer--active');
             timerContainerDiv.classList.remove('timer-container--active');
-            timerIsHighlighted = false;
 
-            console.log(`>> Se retira clase. timerIsHighlighted es: ${timerIsHighlighted}`);
+            timerIsHighlighted = false;
         }
 
-        // console.log(`timerIsHighlighted es ${timerIsHighlighted} y isReloadButton es ${isReloadButton}`);
-
-
-
     }
+
+    // Reset all variables
 
     isReloadButton = undefined;
     isStopButton = undefined;
 
-    console.log(` >> Al finalizar la ejecucion de la funcion highlightTimer(), los valores son:  isStopButton: ${isStopButton}. isReloadButton: ${isReloadButton} `);
 }
 
 
@@ -201,22 +201,20 @@ function stopTimer(event) {
     }
 
 
-
-    if (event instanceof Event) {
-
-        // Stop generado por el boton
+    if (event instanceof Event) { // Stop triggered my stop button
 
         selectedSong = {};
         isReloadButton = false;
         isStopButton = true
         updateMusicTitle();
         highlightTimer();
-        console.log(`-> (BOTON) Se ha pulsado el boton de STOP. El valor de isReloadButton es de ${isReloadButton} y el de isStopButton es de  ${isStopButton}`);
+
 
     } else {
+
         isReloadButton = true;
         isStopButton = false;
-        console.log(`Ejecutado STOP. isReloadButton tiene un valor de:  ${isReloadButton} `);
+
     }
 
     stopBell();
@@ -227,6 +225,7 @@ function playBell() {
     bellSound = new Audio('../audio/bells/meditation-bell.mp3');
     bellSound.play();
 }
+
 function stopBell() {
     if (bellSound && !bellSound.ended) {
         bellSound.pause();
@@ -519,7 +518,6 @@ function stopMusic() {
 }
 function updateMusicTitle() {
 
-
     const musicDiv = document.querySelector('.music');
     const musicTitle = document.querySelector('.music__title');
 
@@ -543,11 +541,9 @@ function saveSession() {
 
     if (bellTime) {
         sessionStorage.setItem('bellTime', bellTime);
-        console.log(`La campana guardada es ${sessionStorage.getItem('bellTime')}`);
 
     } if (selectedSong) {
         sessionStorage.setItem('selectedSong', JSON.stringify(selectedSong));
-        console.log(`La musica guardada es ${sessionStorage.getItem('selectedSong')}`);
     }
 
 }
@@ -556,11 +552,9 @@ function restoreSession() {
 
     if (sessionStorage.getItem('bellTime')) {
         bellTime = sessionStorage.getItem('bellTime');
-        console.log(`Has restaurado el valor de bellTime a: ${bellTime}`);
 
     } if (sessionStorage.getItem('selectedSong')) {
         selectedSong = JSON.parse(sessionStorage.getItem('selectedSong'));
-        console.log(`La musica guardada es ${selectedSong}`);
 
         updateMusicTitle()
         stopTimer()
@@ -573,7 +567,11 @@ function increaseTime() {
     document.querySelector('.digits_minutes').value++;
 }
 function decreaseTime() {
-    document.querySelector('.digits_minutes').value--;
+
+    if (document.querySelector('.digits_minutes').value > 0) {
+        document.querySelector('.digits_minutes').value--;
+    }
+
 }
 
 function applyTransition(content) {
