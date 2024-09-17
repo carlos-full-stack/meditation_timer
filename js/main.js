@@ -13,11 +13,9 @@ let basePath;
 
 if (window.location.hostname === 'carlos-full-stack.github.io') {
     basePath = '/meditation_timer';
-    console.log('location: github');
 
 } else {
     basePath = '.';
-    console.log('location: localhost');
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -236,7 +234,7 @@ function stopTimer(event) {
 }
 function playBell() {
 
-    bellSound = new Audio(`${basePath}/../audio/bells/meditation-bell.mp3`);
+    bellSound = new Audio(`${basePath}/audio/bells/meditation-bell.mp3`);
     bellSound.play();
 }
 
@@ -502,19 +500,16 @@ function playMusic() {
     if (selectedSong && selectedSong.id) {
 
         if (songs[selectedSong.id]) {
+            let songUrl = songs[selectedSong.id].url;
             music = new Audio(songs[selectedSong.id].url);
+
         }
     }
 
-    if (music) {
-        music.play();
-    } else {
-        console.log('Music not found');
-
-    }
-
+    if (music) music.play();
 
 }
+
 function pauseMusic() {
     if (music) {
         pausedTime = music.currentTime;
