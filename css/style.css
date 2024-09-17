@@ -26,6 +26,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 0;
 }
 
 .timer-container {
@@ -52,7 +53,7 @@ body {
 
 .container {
     position: relative;
-    width: 750px;
+    width: 330px;
     min-height: 600px;
     padding: 2rem;
     background-color: #ffffff94;
@@ -63,6 +64,13 @@ body {
     justify-content: center;
     align-items: center;
     gap: 1rem;
+}
+
+@media (min-width: 675px) {
+
+    .container {
+        width: 625px;
+    }
 }
 
 .digits {
@@ -88,10 +96,17 @@ body {
 
 .options ul {
     display: inline-flex;
-    gap: 5rem;
+    gap: 2.5rem;
     list-style: none;
     padding: 0;
     margin: 0;
+}
+
+@media (min-width: 675px) {
+
+    .options ul {
+        gap: 5rem;
+    }
 }
 
 .options a {
@@ -166,21 +181,35 @@ input[type=number] {
 
 .control {
     display: flex;
-    gap: 2rem;
+    gap: .9rem;
     position: absolute;
     bottom: 3.5rem;
 }
 
+@media (min-width: 675px) {
+
+    .control {
+        gap: 2rem;
+    }
+}
+
 .control span {
     font-size: 1rem;
-    margin-left: 1rem;
+    margin-left: .5rem;
     font-weight: 800;
+}
+
+@media (min-width: 675px) {
+
+    .control span {
+        margin-left: 1rem;
+    }
 }
 
 .control__stop,
 .control__reload {
-    width: 4rem;
-    height: 4rem;
+    width: 3.8rem;
+    height: 3.8rem;
     border: solid 2px var(--primary-color);
     display: flex !important;
     justify-content: center;
@@ -191,6 +220,16 @@ input[type=number] {
 
 }
 
+@media (min-width: 675px) {
+
+    .control__stop,
+    .control__reload {
+        width: 4rem;
+        height: 4rem;
+    }
+}
+
+
 .control__stop:hover,
 .control__reload:hover {
     color: #5b7a84;
@@ -198,7 +237,7 @@ input[type=number] {
 }
 
 .control__play-pause {
-    width: 10rem;
+    width: 7.8rem;
     height: 4rem;
     display: flex !important;
     justify-content: center;
@@ -207,6 +246,15 @@ input[type=number] {
     color: white;
     cursor: pointer;
 }
+
+@media (min-width: 675px) {
+
+    .control__play-pause {
+        width: 10rem;
+        height: 4rem;
+    }
+}
+
 
 .control__play {
     background-color: var(--primary-color);
@@ -229,7 +277,14 @@ input[type=number] {
     list-style-type: none;
     margin-top: 2rem;
     padding: 0;
-    gap: 2rem;
+    gap: 1.2rem;
+}
+
+@media (min-width: 675px) {
+
+    .bell-options ul {
+        gap: 2rem;
+    }
 }
 
 .option-container {
@@ -240,12 +295,20 @@ input[type=number] {
     justify-content: center;
     gap: 1.2rem;
     text-align: center;
-    width: 150px;
-    height: 150px;
+    width: 120px;
+    height: 120px;
     border: 1px solid #ccc;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+}
+
+@media (min-width: 675px) {
+
+    .option-container {
+        width: 150px;
+        height: 150px;
+    }
 }
 
 .option-container i {
@@ -274,11 +337,18 @@ svg {
 
 .playlist {
     display: grid;
-    width: 60%;
+    width: 95%;
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
-    margin-top: 3rem;
+    margin-top: 5rem;
     padding: 0;
+}
+
+@media (min-width: 675px) {
+
+    .playlist {
+        width: 60%;
+    }
 }
 
 .song {
@@ -290,10 +360,18 @@ svg {
 }
 
 .song__img {
-    width: 125px;
-    height: 125px;
+    width: 100px;
+    height: 100px;
     border: 4px solid transparent;
     border-radius: 50% 50%;
+}
+
+@media (min-width: 675px) {
+
+    .song__img {
+        width: 125px;
+        height: 125px;
+    }
 }
 
 .song input[type="radio"] {
@@ -312,4 +390,5 @@ svg {
     font-size: 1.1rem;
     font-weight: 300;
     margin-bottom: 0rem;
+    text-align: center;
 }
