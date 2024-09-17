@@ -275,7 +275,7 @@ input[type=number] {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     list-style-type: none;
-    margin-top: 2rem;
+    margin-top: 4rem;
     padding: 0;
     gap: 1.2rem;
 }
@@ -283,7 +283,7 @@ input[type=number] {
 @media (min-width: 675px) {
 
     .bell-options ul {
-        gap: 2rem;
+        gap: 3rem;
     }
 }
 
